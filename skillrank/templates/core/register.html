@@ -1,0 +1,1074 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng ký | SkillRank - Nền tảng IT Challenges</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --secondary: #ec4899;
+            --accent: #8b5cf6;
+            --dark: #0f172a;
+            --light: #f8fafc;
+            --gray: #64748b;
+            --success: #10b981;
+            --error: #ef4444;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            background: var(--dark);
+            overflow-x: hidden;
+        }
+
+        /* Animated Background */
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #312e81 100%);
+            overflow: hidden;
+        }
+
+        .bg-animation::before {
+            content: '';
+            position: absolute;
+            width: 150%;
+            height: 150%;
+            background: radial-gradient(circle, rgba(99, 102, 241, 0.15) 0%, transparent 60%);
+            animation: float 20s infinite ease-in-out;
+            top: -25%;
+            left: -25%;
+        }
+
+        .bg-animation::after {
+            content: '';
+            position: absolute;
+            width: 150%;
+            height: 150%;
+            background: radial-gradient(circle, rgba(236, 72, 153, 0.1) 0%, transparent 60%);
+            animation: float 25s infinite ease-in-out reverse;
+            bottom: -25%;
+            right: -25%;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(30px, -30px) scale(1.1); }
+            66% { transform: translate(-20px, 20px) scale(0.9); }
+        }
+
+        /* Floating Shapes */
+        .shape {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.4;
+            animation: shape-float 15s infinite ease-in-out;
+        }
+
+        .shape-1 {
+            width: 400px;
+            height: 400px;
+            background: var(--primary);
+            top: -100px;
+            right: -100px;
+            animation-delay: 0s;
+        }
+
+        .shape-2 {
+            width: 300px;
+            height: 300px;
+            background: var(--secondary);
+            bottom: -50px;
+            left: -50px;
+            animation-delay: -5s;
+        }
+
+        .shape-3 {
+            width: 200px;
+            height: 200px;
+            background: var(--accent);
+            top: 50%;
+            left: 30%;
+            animation-delay: -10s;
+        }
+
+        @keyframes shape-float {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            50% { transform: translate(50px, 50px) rotate(180deg); }
+        }
+
+        /* Left Side - Branding */
+        .brand-section {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 4rem;
+            color: white;
+            position: relative;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 3rem;
+            font-size: 2rem;
+            font-weight: 800;
+            letter-spacing: -1px;
+        }
+
+        .logo-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            box-shadow: 0 10px 30px rgba(99, 102, 241, 0.3);
+        }
+
+        .headline {
+            font-size: 3.5rem;
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, #fff 0%, #a5b4fc 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subheadline {
+            font-size: 1.25rem;
+            color: #94a3b8;
+            line-height: 1.6;
+            max-width: 500px;
+            margin-bottom: 3rem;
+        }
+
+        .features {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            font-size: 1.1rem;
+            color: #cbd5e1;
+            transition: transform 0.3s ease;
+        }
+
+        .feature-item:hover {
+            transform: translateX(10px);
+        }
+
+        .feature-icon {
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Right Side - Form */
+        .form-section {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            position: relative;
+        }
+
+        .form-container {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            padding: 3rem;
+            width: 100%;
+            max-width: 480px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            animation: slide-up 0.6s ease-out;
+        }
+
+        @keyframes slide-up {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .form-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .form-header h2 {
+            color: white;
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .form-header p {
+            color: #94a3b8;
+            font-size: 0.95rem;
+        }
+
+        .role-selector {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .role-option {
+            position: relative;
+            cursor: pointer;
+        }
+
+        .role-option input {
+            position: absolute;
+            opacity: 0;
+        }
+
+        .role-card {
+            padding: 1.5rem;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            text-align: center;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .role-option:hover .role-card {
+            border-color: rgba(99, 102, 241, 0.5);
+            transform: translateY(-2px);
+        }
+
+        .role-option input:checked + .role-card {
+            border-color: var(--primary);
+            background: rgba(99, 102, 241, 0.1);
+            box-shadow: 0 0 20px rgba(99, 102, 241, 0.2);
+        }
+
+        .role-icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            color: #94a3b8;
+            transition: color 0.3s ease;
+        }
+
+        .role-option input:checked + .role-card .role-icon {
+            color: var(--primary);
+        }
+
+        .role-label {
+            color: white;
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        .role-desc {
+            color: #64748b;
+            font-size: 0.8rem;
+            margin-top: 0.25rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+
+        .form-label {
+            display: block;
+            color: #cbd5e1;
+            font-size: 0.875rem;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            transition: color 0.3s ease;
+        }
+
+        .form-group:focus-within .form-label {
+            color: var(--primary);
+        }
+
+        .input-wrapper {
+            position: relative;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 0.875rem 1rem 0.875rem 3rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            color: white;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            outline: none;
+        }
+
+        .form-input:focus {
+            border-color: var(--primary);
+            background: rgba(255, 255, 255, 0.08);
+            box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
+        }
+
+        .form-input::placeholder {
+            color: #64748b;
+        }
+
+        .input-icon {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #64748b;
+            transition: color 0.3s ease;
+        }
+
+        .form-group:focus-within .input-icon {
+            color: var(--primary);
+        }
+
+        .password-toggle {
+            position: absolute;
+            right: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #64748b;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .password-toggle:hover {
+            color: white;
+        }
+
+        .validation-hint {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+            font-size: 0.8rem;
+            color: #64748b;
+            opacity: 0;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+        }
+
+        .validation-hint.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .validation-hint.valid {
+            color: var(--success);
+        }
+
+        .validation-hint.invalid {
+            color: var(--error);
+        }
+
+        .terms {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .terms input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            margin-top: 2px;
+            accent-color: var(--primary);
+            cursor: pointer;
+        }
+
+        .terms label {
+            color: #94a3b8;
+            font-size: 0.875rem;
+            line-height: 1.5;
+            cursor: pointer;
+        }
+
+        .terms a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .terms a:hover {
+            color: var(--secondary);
+            text-decoration: underline;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 1rem;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(99, 102, 241, 0.4);
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(99, 102, 241, 0.5);
+        }
+
+        .submit-btn:active {
+            transform: translateY(0);
+        }
+
+        .submit-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .submit-btn:hover::before {
+            left: 100%;
+        }
+
+        .submit-btn.loading {
+            pointer-events: none;
+            opacity: 0.8;
+        }
+
+        .submit-btn.loading::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            top: 50%;
+            left: 50%;
+            margin-left: -10px;
+            margin-top: -10px;
+            border: 2px solid rgba(255,255,255,0.3);
+            border-top-color: white;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .divider {
+            display: flex;
+            align-items: center;
+            margin: 2rem 0;
+            color: #64748b;
+            font-size: 0.875rem;
+        }
+
+        .divider::before,
+        .divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .divider span {
+            padding: 0 1rem;
+        }
+
+        .social-login {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .social-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 0.75rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            color: white;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .social-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .login-link {
+            text-align: center;
+            color: #94a3b8;
+            font-size: 0.9rem;
+        }
+
+        .login-link a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+            margin-left: 0.25rem;
+            transition: color 0.3s ease;
+        }
+
+        .login-link a:hover {
+            color: var(--secondary);
+        }
+
+        /* Success Modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(5px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        .modal {
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            padding: 3rem;
+            text-align: center;
+            max-width: 400px;
+            width: 90%;
+            transform: scale(0.9);
+            transition: transform 0.3s ease;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+
+        .modal-overlay.active .modal {
+            transform: scale(1);
+        }
+
+        .success-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--success), #059669);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            font-size: 2.5rem;
+            color: white;
+            animation: scale-in 0.5s ease;
+            box-shadow: 0 10px 30px rgba(16, 185, 129, 0.3);
+        }
+
+        @keyframes scale-in {
+            0% { transform: scale(0); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+
+        .modal h3 {
+            color: white;
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .modal p {
+            color: #94a3b8;
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-btn {
+            padding: 0.875rem 2rem;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .modal-btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            body {
+                flex-direction: column;
+            }
+
+            .brand-section {
+                padding: 2rem;
+                text-align: center;
+                min-height: auto;
+            }
+
+            .headline {
+                font-size: 2.5rem;
+            }
+
+            .features {
+                display: none;
+            }
+
+            .form-section {
+                padding: 2rem 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .form-container {
+                padding: 2rem 1.5rem;
+            }
+
+            .role-selector {
+                grid-template-columns: 1fr;
+            }
+
+            .social-login {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Input validation styles */
+        .form-input.valid {
+            border-color: var(--success);
+        }
+
+        .form-input.invalid {
+            border-color: var(--error);
+        }
+
+        .strength-meter {
+            height: 4px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 2px;
+            margin-top: 0.5rem;
+            overflow: hidden;
+            display: none;
+        }
+
+        .strength-meter.show {
+            display: block;
+        }
+
+        .strength-bar {
+            height: 100%;
+            width: 0;
+            transition: all 0.3s ease;
+            border-radius: 2px;
+        }
+
+        .strength-weak { width: 33%; background: var(--error); }
+        .strength-medium { width: 66%; background: #f59e0b; }
+        .strength-strong { width: 100%; background: var(--success); }
+    </style>
+</head>
+<body>
+    <!-- Background Animation -->
+    <div class="bg-animation">
+        <div class="shape shape-1"></div>
+        <div class="shape shape-2"></div>
+        <div class="shape shape-3"></div>
+    </div>
+
+    <!-- Left Side - Branding -->
+    <div class="brand-section">
+        <div class="logo">
+            <div class="logo-icon">
+                <i class="fas fa-code"></i>
+            </div>
+            <span>SkillRank</span>
+        </div>
+        
+        <h1 class="headline">Bắt đầu hành trình IT của bạn</h1>
+        <p class="subheadline">
+            Tham gia cộng đồng lập trình viên hàng đầu. Giải quyết thử thách thực tế, 
+            xây dựng portfolio và được tuyển dụng bởi các công ty công nghệ hàng đầu.
+        </p>
+
+        <div class="features">
+            <div class="feature-item">
+                <div class="feature-icon">
+                    <i class="fas fa-trophy"></i>
+                </div>
+                <span>Thử thách từ các công ty công nghệ hàng đầu</span>
+            </div>
+            <div class="feature-item">
+                <div class="feature-icon">
+                    <i class="fas fa-chart-line"></i>
+                </div>
+                <span>Xếp hạng dựa trên kỹ năng thực tế, không phải bằng cấp</span>
+            </div>
+            <div class="feature-item">
+                <div class="feature-icon">
+                    <i class="fas fa-briefcase"></i>
+                </div>
+                <span>Cơ hội việc làm từ nhà tuyển dụng uy tín</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Right Side - Form -->
+    <div class="form-section">
+        <div class="form-container">
+            <div class="form-header">
+                <h2>Tạo tài khoản</h2>
+                <p>Chọn vai trò của bạn để bắt đầu</p>
+            </div>
+
+            <form id="registerForm">
+                <!-- Role Selection -->
+                <div class="role-selector">
+                    <label class="role-option">
+                        <input type="radio" name="role" value="candidate" checked>
+                        <div class="role-card">
+                            <div class="role-icon">
+                                <i class="fas fa-user-graduate"></i>
+                            </div>
+                            <div class="role-label">Ứng viên</div>
+                            <div class="role-desc">Tìm việc & Giải thử thách</div>
+                        </div>
+                    </label>
+                    <label class="role-option">
+                        <input type="radio" name="role" value="company">
+                        <div class="role-card">
+                            <div class="role-icon">
+                                <i class="fas fa-building"></i>
+                            </div>
+                            <div class="role-label">Nhà tuyển dụng</div>
+                            <div class="role-desc">Đăng thử thách & Tuyển dụng</div>
+                        </div>
+                    </label>
+                </div>
+
+                <!-- Full Name -->
+                <div class="form-group">
+                    <label class="form-label">Họ và tên</label>
+                    <div class="input-wrapper">
+                        <i class="fas fa-user input-icon"></i>
+                        <input type="text" class="form-input" id="fullName" placeholder="Nguyễn Văn A" required>
+                    </div>
+                    <div class="validation-hint" id="nameHint">
+                        <i class="fas fa-info-circle"></i>
+                        <span>Tên phải có ít nhất 2 ký tự</span>
+                    </div>
+                </div>
+
+                <!-- Email -->
+                <div class="form-group">
+                    <label class="form-label">Email</label>
+                    <div class="input-wrapper">
+                        <i class="fas fa-envelope input-icon"></i>
+                        <input type="email" class="form-input" id="email" placeholder="name@example.com" required>
+                    </div>
+                    <div class="validation-hint" id="emailHint">
+                        <i class="fas fa-info-circle"></i>
+                        <span>Nhập email hợp lệ</span>
+                    </div>
+                </div>
+
+                <!-- Password -->
+                <div class="form-group">
+                    <label class="form-label">Mật khẩu</label>
+                    <div class="input-wrapper">
+                        <i class="fas fa-lock input-icon"></i>
+                        <input type="password" class="form-input" id="password" placeholder="••••••••" required>
+                        <i class="fas fa-eye password-toggle" id="togglePassword"></i>
+                    </div>
+                    <div class="strength-meter" id="strengthMeter">
+                        <div class="strength-bar" id="strengthBar"></div>
+                    </div>
+                    <div class="validation-hint" id="passwordHint">
+                        <i class="fas fa-info-circle"></i>
+                        <span>Ít nhất 8 ký tự, bao gồm chữ hoa, chữ thường và số</span>
+                    </div>
+                </div>
+
+                <!-- Confirm Password -->
+                <div class="form-group">
+                    <label class="form-label">Xác nhận mật khẩu</label>
+                    <div class="input-wrapper">
+                        <i class="fas fa-lock input-icon"></i>
+                        <input type="password" class="form-input" id="confirmPassword" placeholder="••••••••" required>
+                    </div>
+                    <div class="validation-hint" id="confirmHint">
+                        <i class="fas fa-info-circle"></i>
+                        <span>Mật khẩu không khớp</span>
+                    </div>
+                </div>
+
+                <!-- Terms -->
+                <div class="terms">
+                    <input type="checkbox" id="agreeTerms" required>
+                    <label for="agreeTerms">
+                        Tôi đồng ý với <a href="#">Điều khoản sử dụng</a> và <a href="#">Chính sách bảo mật</a> của SkillRank
+                    </label>
+                </div>
+
+                <!-- Submit Button -->
+                <button type="submit" class="submit-btn" id="submitBtn">
+                    <span>Tạo tài khoản</span>
+                </button>
+            </form>
+
+            <div class="divider">
+                <span>Hoặc đăng ký với</span>
+            </div>
+
+            <div class="social-login">
+                <button class="social-btn">
+                    <i class="fab fa-google"></i>
+                    <span>Google</span>
+                </button>
+                <button class="social-btn">
+                    <i class="fab fa-github"></i>
+                    <span>GitHub</span>
+                </button>
+            </div>
+
+            <div class="login-link">
+                Đã có tài khoản?<a href="#">Đăng nhập ngay</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success Modal -->
+    <div class="modal-overlay" id="successModal">
+        <div class="modal">
+            <div class="success-icon">
+                <i class="fas fa-check"></i>
+            </div>
+            <h3>Đăng ký thành công!</h3>
+            <p>Chào mừng bạn đến với SkillRank. Kiểm tra email để xác nhận tài khoản.</p>
+            <button class="modal-btn" onclick="closeModal()">Bắt đầu khám phá</button>
+        </div>
+    </div>
+
+    <script>
+        // Form elements
+        const form = document.getElementById('registerForm');
+        const fullName = document.getElementById('fullName');
+        const email = document.getElementById('email');
+        const password = document.getElementById('password');
+        const confirmPassword = document.getElementById('confirmPassword');
+        const togglePassword = document.getElementById('togglePassword');
+        const submitBtn = document.getElementById('submitBtn');
+        const strengthMeter = document.getElementById('strengthMeter');
+        const strengthBar = document.getElementById('strengthBar');
+
+        // Validation hints
+        const nameHint = document.getElementById('nameHint');
+        const emailHint = document.getElementById('emailHint');
+        const passwordHint = document.getElementById('passwordHint');
+        const confirmHint = document.getElementById('confirmHint');
+
+        // Toggle password visibility
+        togglePassword.addEventListener('click', () => {
+            const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+            password.setAttribute('type', type);
+            togglePassword.classList.toggle('fa-eye');
+            togglePassword.classList.toggle('fa-eye-slash');
+        });
+
+        // Real-time validation
+        fullName.addEventListener('input', () => {
+            const isValid = fullName.value.length >= 2;
+            updateValidation(fullName, nameHint, isValid, 'Tên hợp lệ', 'Tên phải có ít nhất 2 ký tự');
+        });
+
+        email.addEventListener('input', () => {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            const isValid = emailRegex.test(email.value);
+            updateValidation(email, emailHint, isValid, 'Email hợp lệ', 'Email không hợp lệ');
+        });
+
+        password.addEventListener('input', () => {
+            const value = password.value;
+            const hasUpper = /[A-Z]/.test(value);
+            const hasLower = /[a-z]/.test(value);
+            const hasNumber = /[0-9]/.test(value);
+            const isValid = value.length >= 8 && hasUpper && hasLower && hasNumber;
+            
+            updateValidation(password, passwordHint, isValid, 'Mật khẩu mạnh', 'Mật khẩu cần ít nhất 8 ký tự, chữ hoa, chữ thường và số');
+            
+            // Update strength meter
+            strengthMeter.classList.add('show');
+            if (value.length === 0) {
+                strengthBar.className = 'strength-bar';
+            } else if (value.length < 6 || (!hasUpper && !hasLower)) {
+                strengthBar.className = 'strength-bar strength-weak';
+            } else if (value.length < 8 || !hasNumber) {
+                strengthBar.className = 'strength-bar strength-medium';
+            } else {
+                strengthBar.className = 'strength-bar strength-strong';
+            }
+
+            // Check confirm password match
+            if (confirmPassword.value) {
+                const match = password.value === confirmPassword.value;
+                updateValidation(confirmPassword, confirmHint, match, 'Mật khẩu khớp', 'Mật khẩu không khớp');
+            }
+        });
+
+        confirmPassword.addEventListener('input', () => {
+            const match = password.value === confirmPassword.value && confirmPassword.value !== '';
+            updateValidation(confirmPassword, confirmHint, match, 'Mật khẩu khớp', 'Mật khẩu không khớp');
+        });
+
+        function updateValidation(input, hint, isValid, validMsg, invalidMsg) {
+            hint.classList.add('show');
+            if (input.value === '') {
+                hint.classList.remove('valid', 'invalid');
+                input.classList.remove('valid', 'invalid');
+                hint.querySelector('span').textContent = invalidMsg;
+            } else if (isValid) {
+                hint.classList.remove('invalid');
+                hint.classList.add('valid');
+                input.classList.remove('invalid');
+                input.classList.add('valid');
+                hint.querySelector('i').className = 'fas fa-check-circle';
+                hint.querySelector('span').textContent = validMsg;
+            } else {
+                hint.classList.remove('valid');
+                hint.classList.add('invalid');
+                input.classList.remove('valid');
+                input.classList.add('invalid');
+                hint.querySelector('i').className = 'fas fa-exclamation-circle';
+                hint.querySelector('span').textContent = invalidMsg;
+            }
+        }
+
+        // Form submission
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            // Validate all fields
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            const hasUpper = /[A-Z]/.test(password.value);
+            const hasLower = /[a-z]/.test(password.value);
+            const hasNumber = /[0-9]/.test(password.value);
+            
+            const isNameValid = fullName.value.length >= 2;
+            const isEmailValid = emailRegex.test(email.value);
+            const isPasswordValid = password.value.length >= 8 && hasUpper && hasLower && hasNumber;
+            const isConfirmValid = password.value === confirmPassword.value;
+
+            if (!isNameValid || !isEmailValid || !isPasswordValid || !isConfirmValid) {
+                // Shake animation for error
+                form.style.animation = 'shake 0.5s';
+                setTimeout(() => {
+                    form.style.animation = '';
+                }, 500);
+                return;
+            }
+
+            // Simulate API call
+            submitBtn.classList.add('loading');
+            submitBtn.querySelector('span').textContent = 'Đang xử lý...';
+
+            // Simulate delay
+            await new Promise(resolve => setTimeout(resolve, 2000));
+
+            // Show success modal
+            submitBtn.classList.remove('loading');
+            submitBtn.querySelector('span').textContent = 'Tạo tài khoản';
+            document.getElementById('successModal').classList.add('active');
+        });
+
+        function closeModal() {
+            document.getElementById('successModal').classList.remove('active');
+            form.reset();
+            document.querySelectorAll('.validation-hint').forEach(hint => {
+                hint.classList.remove('show', 'valid', 'invalid');
+            });
+            document.querySelectorAll('.form-input').forEach(input => {
+                input.classList.remove('valid', 'invalid');
+            });
+            strengthMeter.classList.remove('show');
+            strengthBar.className = 'strength-bar';
+        }
+
+        // Close modal on outside click
+        document.getElementById('successModal').addEventListener('click', (e) => {
+            if (e.target === e.currentTarget) {
+                closeModal();
+            }
+        });
+
+        // Add shake animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes shake {
+                0%, 100% { transform: translateX(0); }
+                10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+                20%, 40%, 60%, 80% { transform: translateX(5px); }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>

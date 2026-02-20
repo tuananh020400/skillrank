@@ -1,0 +1,266 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng nhập - SkillRank</title>
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+<body class="bg-slate-50 min-h-screen flex items-center justify-center relative overflow-hidden">
+
+    <!-- Animated Background Shapes -->
+    <div class="fixed inset-0 login-gradient-bg overflow-hidden">
+        <div class="floating-shape shape-1"></div>
+        <div class="floating-shape shape-2"></div>
+        <div class="floating-shape shape-3"></div>
+        
+        <!-- Grid Pattern Overlay -->
+        <div class="absolute inset-0" style="background-image: radial-gradient(circle at 1px 1px, rgba(255,255,255,0.1) 1px, transparent 0); background-size: 40px 40px;"></div>
+    </div>
+
+    <!-- Back to Home Link -->
+    <a href="{% url 'home' %}" class="fixed top-6 left-6 z-50 flex items-center gap-2 text-white/80 hover:text-white transition">
+        <i data-lucide="arrow-left" class="w-5 h-5"></i>
+        <span class="font-medium">Quay lại trang chủ</span>
+    </a>
+
+    <!-- Logo Top Right -->
+    <div class="fixed top-6 right-6 z-50 flex items-center gap-2">
+        <div class="w-10 h-10 bg-white/20 backdrop-blur rounded-xl flex items-center justify-center border border-white/30">
+            <i data-lucide="code-2" class="text-white w-6 h-6"></i>
+        </div>
+        <span class="font-bold text-xl text-white tracking-tight">SkillRank</span>
+    </div>
+
+    <!-- Main Login Container -->
+    <div class="relative z-10 w-full max-w-5xl mx-4 grid lg:grid-cols-2 gap-0 rounded-3xl overflow-hidden shadow-2xl">
+        
+        <!-- Left Side - Info Panel -->
+        <div class="dark-glass p-12 text-white flex flex-col justify-between hidden lg:flex">
+            <div>
+                <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 border border-white/20 text-sm font-medium mb-8">
+                    <span class="w-2 h-2 rounded-full bg-green-400 animate-pulse"></span>
+                    Hệ thống đang hoạt động
+                </div>
+                
+                <h2 class="text-4xl font-bold mb-6 leading-tight">
+                    Chào mừng trở lại<br/>
+                    <span class="text-blue-300">cộng đồng IT</span>
+                </h2>
+                
+                <p class="text-slate-300 text-lg leading-relaxed mb-8">
+                    Đăng nhập để tiếp tục hành trình nâng cao kỹ năng, tham gia thử thách và kết nối với các doanh nghiệp hàng đầu.
+                </p>
+
+                <!-- Stats -->
+                <div class="grid grid-cols-2 gap-6">
+                    <div class="bg-white/10 rounded-2xl p-4 border border-white/10">
+                        <div class="text-3xl font-bold text-blue-300 mb-1">10,000+</div>
+                        <div class="text-sm text-slate-400">Lập trình viên</div>
+                    </div>
+                    <div class="bg-white/10 rounded-2xl p-4 border border-white/10">
+                        <div class="text-3xl font-bold text-purple-300 mb-1">500+</div>
+                        <div class="text-sm text-slate-400">Doanh nghiệp</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Testimonial -->
+            <div class="mt-8">
+                <div class="flex items-start gap-4 bg-white/5 rounded-2xl p-6 border border-white/10">
+                    <img src="https://ui-avatars.com/api/?name=Nguyen+Thi+Ngoc+Ha&background=3b82f6&color=fff" class="w-12 h-12 rounded-full border-2 border-white/20" alt="User">
+                    <div>
+                        <p class="text-sm text-slate-300 italic mb-2">"Nhờ SkillRank, tôi đã được tuyển vào FPT Software mà không cần qua vòng CV screening."</p>
+                        <div class="font-semibold text-white">Nguyễn Thị Ngọc Hà</div>
+                        <div class="text-xs text-slate-400">Backend Developer tại FPT Software</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Side - Login Form -->
+        <div class="glass-card p-8 lg:p-12 bg-white">
+            
+            <!-- Tab Switcher -->
+            <div class="flex p-1 bg-slate-100 rounded-xl mb-8">
+                <button type="button" id="tab-candidate" class="flex-1 py-3 px-4 rounded-lg font-semibold text-sm transition-all tab-active flex items-center justify-center gap-2" onclick="switchTab('candidate')">
+                    <i data-lucide="user" class="w-4 h-4"></i>
+                    Ứng viên
+                </button>
+                <button type="button" id="tab-employer" class="flex-1 py-3 px-4 rounded-lg font-semibold text-sm transition-all tab-inactive flex items-center justify-center gap-2" onclick="switchTab('employer')">
+                    <i data-lucide="building-2" class="w-4 h-4"></i>
+                    Doanh nghiệp
+                </button>
+            </div>
+
+            <!-- Form Header -->
+            <div class="mb-8">
+                <h1 class="text-2xl font-bold text-slate-900 mb-2" id="form-title">Đăng nhập ứng viên</h1>
+                <p class="text-slate-500 text-sm" id="form-subtitle">Nhập thông tin để truy cập bảng xếp hạng và thử thách</p>
+            </div>
+
+            <!-- Login Form -->
+            <form method="POST" action="{% url 'login' %}" class="space-y-5">
+                {% csrf_token %}
+                <input type="hidden" name="user_type" id="user-type" value="candidate">
+
+                <!-- Email Input -->
+                <div>
+                    <label class="block text-sm font-semibold text-slate-700 mb-2">Email</label>
+                    <div class="relative">
+                        <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                            <i data-lucide="mail" class="w-5 h-5 text-slate-400"></i>
+                        </div>
+                        <input type="email" name="email" required 
+                            class="input-field w-full pl-12 pr-4 py-3.5 rounded-xl border border-slate-200 bg-slate-50 text-slate-900 placeholder:text-slate-400 outline-none"
+                            placeholder="name@example.com">
+                    </div>
+                </div>
+
+                <!-- Password Input -->
+                <div>
+                    <label class="block text-sm font-semibold text-slate-700 mb-2">Mật khẩu</label>
+                    <div class="relative">
+                        <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                            <i data-lucide="lock" class="w-5 h-5 text-slate-400"></i>
+                        </div>
+                        <input type="password" name="password" required 
+                            class="input-field w-full pl-12 pr-12 py-3.5 rounded-xl border border-slate-200 bg-slate-50 text-slate-900 placeholder:text-slate-400 outline-none"
+                            placeholder="••••••••">
+                        <button type="button" onclick="togglePassword()" class="absolute inset-y-0 right-0 pr-4 flex items-center text-slate-400 hover:text-slate-600 transition">
+                            <i data-lucide="eye" class="w-5 h-5" id="eye-icon"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Remember Me & Forgot Password -->
+                <div class="flex items-center justify-between">
+                    <label class="flex items-center gap-2 cursor-pointer">
+                        <input type="checkbox" name="remember" class="w-4 h-4 rounded border-slate-300 text-blue-600 focus:ring-blue-500">
+                        <span class="text-sm text-slate-600">Ghi nhớ đăng nhập</span>
+                    </label>
+                    <a href="{% url 'login' %}" class="text-sm font-semibold text-blue-600 hover:text-blue-700 transition">Quên mật khẩu?</a>
+                </div>
+
+                <!-- Submit Button -->
+                <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white py-4 rounded-xl font-bold text-lg transition shadow-lg shadow-blue-600/30 flex items-center justify-center gap-2">
+                    <span>Đăng nhập</span>
+                    <i data-lucide="arrow-right" class="w-5 h-5"></i>
+                </button>
+            </form>
+
+            <!-- Divider -->
+            <div class="divider flex items-center gap-4 my-6 text-slate-400 text-sm">
+                <span>Hoặc đăng nhập với</span>
+            </div>
+
+            <!-- Social Login -->
+            <div class="grid grid-cols-2 gap-4">
+                <button type="button" class="social-btn flex items-center justify-center gap-2 px-4 py-3 rounded-xl border border-slate-200 bg-white text-slate-700 font-medium hover:border-slate-300">
+                    <svg class="w-5 h-5" viewBox="0 0 24 24">
+                        <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                        <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                        <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+                        <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+                    </svg>
+                    Google
+                </button>
+                <button type="button" class="social-btn flex items-center justify-center gap-2 px-4 py-3 rounded-xl border border-slate-200 bg-white text-slate-700 font-medium hover:border-slate-300">
+                    <svg class="w-5 h-5 text-[#1877F2]" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                    </svg>
+                    Facebook
+                </button>
+            </div>
+
+            <!-- Register Link -->
+            <div class="mt-8 text-center">
+                <p class="text-slate-600">
+                    Chưa có tài khoản? 
+                    <a href="{% url 'register' %}" class="font-semibold text-blue-600 hover:text-blue-700 transition">Đăng ký ngay</a>
+                </p>
+            </div>
+
+            <!-- Employer Specific Info -->
+            <div id="employer-info" class="hidden mt-6 p-4 bg-blue-50 rounded-xl border border-blue-100">
+                <div class="flex items-start gap-3">
+                    <i data-lucide="info" class="w-5 h-5 text-blue-600 shrink-0 mt-0.5"></i>
+                    <div class="text-sm text-blue-800">
+                        <p class="font-semibold mb-1">Đăng nhập Doanh nghiệp</p>
+                        <p class="text-blue-600">Liên hệ <a href="mailto:enterprise@skillrank.vn" class="underline">enterprise@skillrank.vn</a> để được cấp tài khoản doanh nghiệp.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+
+        // Tab Switching Logic
+        function switchTab(type) {
+            const candidateTab = document.getElementById('tab-candidate');
+            const employerTab = document.getElementById('tab-employer');
+            const formTitle = document.getElementById('form-title');
+            const formSubtitle = document.getElementById('form-subtitle');
+            const userType = document.getElementById('user-type');
+            const employerInfo = document.getElementById('employer-info');
+
+            if (type === 'candidate') {
+                candidateTab.classList.remove('tab-inactive');
+                candidateTab.classList.add('tab-active');
+                employerTab.classList.remove('tab-active');
+                employerTab.classList.add('tab-inactive');
+                formTitle.textContent = 'Đăng nhập ứng viên';
+                formSubtitle.textContent = 'Nhập thông tin để truy cập bảng xếp hạng và thử thách';
+                userType.value = 'candidate';
+                employerInfo.classList.add('hidden');
+            } else {
+                employerTab.classList.remove('tab-inactive');
+                employerTab.classList.add('tab-active');
+                candidateTab.classList.remove('tab-active');
+                candidateTab.classList.add('tab-inactive');
+                formTitle.textContent = 'Đăng nhập doanh nghiệp';
+                formSubtitle.textContent = 'Truy cập dashboard tuyển dụng và quản lý thử thách';
+                userType.value = 'employer';
+                employerInfo.classList.remove('hidden');
+            }
+        }
+
+        // Password Toggle
+        function togglePassword() {
+            const passwordInput = document.querySelector('input[name="password"]');
+            const eyeIcon = document.getElementById('eye-icon');
+            
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                eyeIcon.setAttribute('data-lucide', 'eye-off');
+            } else {
+                passwordInput.type = 'password';
+                eyeIcon.setAttribute('data-lucide', 'eye');
+            }
+            lucide.createIcons();
+        }
+
+        // Add loading state to submit button
+        document.querySelector('form').addEventListener('submit', function(e) {
+            const btn = this.querySelector('button[type="submit"]');
+            btn.innerHTML = '<span class="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></span> Đang xử lý...';
+            btn.disabled = true;
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,439 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SkillRank - Nền tảng tuyển dụng IT dựa trên năng lực thực tế</title>
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+<body class="bg-slate-50 text-slate-900">
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 glass-effect border-b border-slate-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <div class="flex items-center gap-2">
+                    <div class="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
+                        <i data-lucide="code-2" class="text-white w-5 h-5"></i>
+                    </div>
+                    <span class="font-bold text-xl tracking-tight text-slate-900">SkillRank</span>
+                </div>
+                
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#challenges" class="text-slate-600 hover:text-blue-600 font-medium transition">Thử Thách</a>
+                    <a href="#rankings" class="text-slate-600 hover:text-blue-600 font-medium transition">Xếp Hạng</a>
+                    <a href="#companies" class="text-slate-600 hover:text-blue-600 font-medium transition">Doanh Nghiệp</a>
+                    <a href="#tutorial" class="text-slate-600 hover:text-blue-600 font-medium transition">Hướng Dẫn</a>
+                </div>
+
+                <div class="flex items-center gap-3">
+                    <a href="{% url 'login' %}" class="hidden md:block text-slate-600 hover:text-slate-900 font-medium px-4 py-2">
+                        Đăng nhập
+                    </a>
+                    <a href="{% url 'register' %}" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2.5 rounded-lg font-semibold transition shadow-lg shadow-blue-600/30">
+                        Bắt đầu ngay
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative pt-32 pb-20 lg:pt-40 lg:pb-32 overflow-hidden hero-pattern">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="grid lg:grid-cols-2 gap-12 items-center">
+                <div>
+                    <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-50 border border-blue-200 text-blue-700 font-semibold text-sm mb-6">
+                        <span class="w-2 h-2 rounded-full bg-blue-600 animate-pulse"></span>
+                        Đã có 500+ doanh nghiệp và 10,000+ lập trình viên tham gia
+                    </div>
+                    <h1 class="text-5xl lg:text-6xl font-bold leading-tight mb-6">
+                        Tuyển dụng IT <br />
+                        <span class="gradient-text">dựa trên năng lực thực tế</span>
+                    </h1>
+                    <p class="text-lg text-slate-600 mb-8 leading-relaxed max-w-lg">
+                        Không còn CV xanh. Chỉ có code. Giải quyết thử thách thực tế, ghi điểm xếp hạng và được các công ty hàng đầu săn đón dựa trên kỹ năng thực sự của bạn.
+                    </p>
+                    
+                    <!-- Search Bar -->
+                    <form action="{% url 'home' %}" method="GET" class="bg-white p-2 rounded-2xl shadow-xl border border-slate-200 max-w-2xl hero-search">
+                        <div class="flex gap-2">
+                            <div class="flex-1 flex items-center px-4 rounded-xl bg-slate-50 border border-slate-200 focus-within:border-blue-500 transition">
+                                <i data-lucide="search" class="text-slate-400 w-5 h-5"></i>
+                                <input type="text" name="q" placeholder="Tìm thử thách theo kỹ năng (VD: Python, React, AI)..." 
+                                    class="w-full px-3 py-3 bg-transparent outline-none text-slate-700 placeholder:text-slate-400">
+                            </div>
+                            <button type="submit" class="bg-slate-900 hover:bg-slate-800 text-white px-8 py-3 rounded-xl font-semibold transition flex items-center gap-2 whitespace-nowrap">
+                                Tìm kiếm
+                            </button>
+                        </div>
+                    </form>
+
+                    <div class="flex gap-6 mt-8 text-sm text-slate-500">
+                        <div class="flex items-center gap-2">
+                            <i data-lucide="check-circle" class="text-green-500 w-4 h-4"></i>
+                            <span>Đánh giá tự động</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <i data-lucide="check-circle" class="text-green-500 w-4 h-4"></i>
+                            <span>Bảng xếp hạng real-time</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <i data-lucide="check-circle" class="text-green-500 w-4 h-4"></i>
+                            <span>Miễn phí 100%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Hero Stats Cards -->
+                <div class="relative hidden lg:block">
+                    <div class="absolute inset-0 bg-gradient-to-r from-blue-500 to-purple-600 rounded-3xl blur-3xl opacity-20 transform rotate-3"></div>
+                    <div class="relative bg-white rounded-3xl shadow-2xl p-8 border border-slate-200">
+                        <div class="flex justify-between items-center mb-8">
+                            <h3 class="font-bold text-slate-900">Bảng xếp hạng tháng này</h3>
+                            <span class="text-sm text-blue-600 font-medium">Chuyên mục: AI/ML</span>
+                        </div>
+                        
+                        <div class="space-y-4">
+                            <!-- Rank 1 -->
+                            <div class="flex items-center gap-4 p-4 rounded-xl bg-gradient-to-r from-amber-50 to-orange-50 border border-amber-200">
+                                <div class="w-10 h-10 rounded-full bg-amber-100 flex items-center justify-center font-bold text-amber-700">1</div>
+                                <img src="https://ui-avatars.com/api/?name=Nguyen+Van+A&background=random" class="w-12 h-12 rounded-full" alt="User">
+                                <div class="flex-1">
+                                    <div class="font-semibold text-slate-900">Nguyễn Văn A</div>
+                                    <div class="text-sm text-slate-500">AI Engineer</div>
+                                </div>
+                                <div class="text-right">
+                                    <div class="font-bold text-slate-900">2,450 điểm</div>
+                                    <div class="text-xs text-green-600">+12% tuần này</div>
+                                </div>
+                            </div>
+
+                            <!-- Rank 2 -->
+                            <div class="flex items-center gap-4 p-4 rounded-xl bg-slate-50 border border-slate-200">
+                                <div class="w-10 h-10 rounded-full bg-slate-200 flex items-center justify-center font-bold text-slate-600">2</div>
+                                <img src="https://ui-avatars.com/api/?name=Tran+Thi+B&background=random" class="w-12 h-12 rounded-full" alt="User">
+                                <div class="flex-1">
+                                    <div class="font-semibold text-slate-900">Trần Thị B</div>
+                                    <div class="text-sm text-slate-500">Data Scientist</div>
+                                </div>
+                                <div class="text-right">
+                                    <div class="font-bold text-slate-900">2,380 điểm</div>
+                                </div>
+                            </div>
+
+                            <!-- Rank 3 -->
+                            <div class="flex items-center gap-4 p-4 rounded-xl bg-slate-50 border border-slate-200">
+                                <div class="w-10 h-10 rounded-full bg-slate-200 flex items-center justify-center font-bold text-slate-600">3</div>
+                                <img src="https://ui-avatars.com/api/?name=Le+Van+C&background=random" class="w-12 h-12 rounded-full" alt="User">
+                                <div class="flex-1">
+                                    <div class="font-semibold text-slate-900">Lê Văn C</div>
+                                    <div class="text-sm text-slate-500">Backend Dev</div>
+                                </div>
+                                <div class="text-right">
+                                    <div class="font-bold text-slate-900">2,150 điểm</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mt-6 pt-6 border-t border-slate-200">
+                            <div class="flex justify-between text-sm">
+                                <span class="text-slate-500">Vị trí của bạn</span>
+                                <span class="font-bold text-slate-900">#142 <span class="text-slate-400 font-normal">/ 8,234</span></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Grid -->
+    <section class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold text-slate-900 mb-4">Nền tảng toàn diện cho ngành IT</h2>
+                <p class="text-slate-600 max-w-2xl mx-auto">Kết nối ứng viên và nhà tuyển dụng dựa trên bằng chứng năng lực thực tế, không phải lời hứa suông trên giấy tờ.</p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="p-8 rounded-2xl bg-slate-50 border border-slate-200 card-hover">
+                    <div class="w-14 h-14 bg-blue-100 rounded-xl flex items-center justify-center mb-6">
+                        <i data-lucide="graduation-cap" class="w-7 h-7 text-blue-600"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-900 mb-3">Lộ trình học tập</h3>
+                    <p class="text-slate-600 leading-relaxed">Hệ thống tutorial được thiết kế bài bản từ cơ bản đến nâng cao, giúp bạn chuẩn bị cho các thử thách thực tế.</p>
+                </div>
+
+                <div class="p-8 rounded-2xl bg-slate-50 border border-slate-200 card-hover">
+                    <div class="w-14 h-14 bg-purple-100 rounded-xl flex items-center justify-center mb-6">
+                        <i data-lucide="trophy" class="w-7 h-7 text-purple-600"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-900 mb-3">Thử thách thực tế</h3>
+                    <p class="text-slate-600 leading-relaxed">Giải quyết vấn đề thực tế từ doanh nghiệp. Code được chấm điểm tự động, công bằng và minh bạch.</p>
+                </div>
+
+                <div class="p-8 rounded-2xl bg-slate-50 border border-slate-200 card-hover">
+                    <div class="w-14 h-14 bg-green-100 rounded-xl flex items-center justify-center mb-6">
+                        <i data-lucide="briefcase" class="w-7 h-7 text-green-600"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-900 mb-3">Kết nối việc làm</h3>
+                    <p class="text-slate-600 leading-relaxed">Doanh nghiệp xem xếp hạng và mời phỏng vấn trực tiếp. Không qua sàng lọc CV, chỉ cần kỹ năng thực sự.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Challenges Section -->
+    <section id="challenges" class="py-20 bg-slate-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-end mb-12">
+                <div>
+                    <h2 class="text-3xl font-bold text-slate-900 mb-4">Thử thách đang mở</h2>
+                    <p class="text-slate-600">Chọn theo chuyên ngành và độ khó phù hợp</p>
+                </div>
+                <div class="hidden md:flex gap-2">
+                    <button class="px-4 py-2 rounded-lg bg-slate-900 text-white text-sm font-medium">Tất cả</button>
+                    <button class="px-4 py-2 rounded-lg bg-white text-slate-600 border border-slate-200 text-sm font-medium hover:border-blue-500">AI/ML</button>
+                    <button class="px-4 py-2 rounded-lg bg-white text-slate-600 border border-slate-200 text-sm font-medium hover:border-blue-500">Web Dev</button>
+                    <button class="px-4 py-2 rounded-lg bg-white text-slate-600 border border-slate-200 text-sm font-medium hover:border-blue-500">Mobile</button>
+                </div>
+            </div>
+
+            <div class="grid lg:grid-cols-2 gap-6">
+                <!-- Challenge Card 1 -->
+                <div class="bg-white rounded-2xl p-6 border border-slate-200 card-hover cursor-pointer">
+                    <div class="flex justify-between items-start mb-4">
+                        <div class="flex gap-3">
+                            <div class="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center">
+                                <i data-lucide="database" class="w-6 h-6 text-orange-600"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-lg text-slate-900">Tối ưu hóa Database E-commerce</h3>
+                                <p class="text-sm text-slate-500">Đăng bởi Tiki.vn • 3 ngày trước</p>
+                            </div>
+                        </div>
+                        <span class="px-3 py-1 rounded-full bg-red-100 text-red-700 text-xs font-bold">Hard</span>
+                    </div>
+                    <p class="text-slate-600 mb-4 text-sm leading-relaxed">
+                        Thiết kế schema và tối ưu query cho hệ thống 1 triệu users đồng thời. Yêu cầu kiến thức PostgreSQL indexing và caching.
+                    </p>
+                    <div class="flex items-center justify-between pt-4 border-t border-slate-100">
+                        <div class="flex gap-4 text-sm text-slate-500">
+                            <span class="flex items-center gap-1"><i data-lucide="users" class="w-4 h-4"></i> 142 người tham gia</span>
+                            <span class="flex items-center gap-1"><i data-lucide="star" class="w-4 h-4"></i> 150 điểm</span>
+                        </div>
+                        <span class="text-blue-600 font-semibold text-sm">Tham gia →</span>
+                    </div>
+                </div>
+
+                <!-- Challenge Card 2 -->
+                <div class="bg-white rounded-2xl p-6 border border-slate-200 card-hover cursor-pointer">
+                    <div class="flex justify-between items-start mb-4">
+                        <div class="flex gap-3">
+                            <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
+                                <i data-lucide="brain" class="w-6 h-6 text-blue-600"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-lg text-slate-900">Xây dựng Recommendation Engine</h3>
+                                <p class="text-sm text-slate-500">Đăng bởi FPT Software • 1 tuần trước</p>
+                            </div>
+                        </div>
+                        <span class="px-3 py-1 rounded-full bg-yellow-100 text-yellow-700 text-xs font-bold">Medium</span>
+                    </div>
+                    <p class="text-slate-600 mb-4 text-sm leading-relaxed">
+                        Xây dựng thuật toán gợi ý sản phẩm dựa trên collaborative filtering. Dataset 100k records được cung cấp.
+                    </p>
+                    <div class="flex items-center justify-between pt-4 border-t border-slate-100">
+                        <div class="flex gap-4 text-sm text-slate-500">
+                            <span class="flex items-center gap-1"><i data-lucide="users" class="w-4 h-4"></i> 89 người tham gia</span>
+                            <span class="flex items-center gap-1"><i data-lucide="star" class="w-4 h-4"></i> 100 điểm</span>
+                        </div>
+                        <span class="text-blue-600 font-semibold text-sm">Tham gia →</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-8 text-center">
+                <a href="{% url 'home' %}" class="inline-flex items-center gap-2 text-blue-600 font-semibold hover:text-blue-700">
+                    Xem tất cả thử thách <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Companies Section -->
+    <section id="companies" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid lg:grid-cols-2 gap-16 items-center">
+                <div>
+                    <h2 class="text-3xl font-bold text-slate-900 mb-6">Dành cho Doanh nghiệp</h2>
+                    <p class="text-lg text-slate-600 mb-8 leading-relaxed">
+                        Tuyển dụng dựa trên bằng chứng năng lực thực tế. Giảm 60% thời gian screening và tăng chất lượng ứng viên được shortlist.
+                    </p>
+                    
+                    <div class="space-y-6">
+                        <div class="flex gap-4">
+                            <div class="w-12 h-12 rounded-full bg-green-100 flex items-center justify-center shrink-0">
+                                <i data-lucide="target" class="w-6 h-6 text-green-600"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-slate-900 mb-1">Đăng thử thách thực tế</h4>
+                                <p class="text-slate-600 text-sm">Tạo bài test phản ánh công việc thực tế tại công ty bạn.</p>
+                            </div>
+                        </div>
+
+                        <div class="flex gap-4">
+                            <div class="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center shrink-0">
+                                <i data-lucide="bar-chart-3" class="w-6 h-6 text-blue-600"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-slate-900 mb-1">Xem bảng xếp hạng chuyên sâu</h4>
+                                <p class="text-slate-600 text-sm">Lọc theo kỹ năng, điểm số, thời gian giải bài và xem code chi tiết.</p>
+                            </div>
+                        </div>
+
+                        <div class="flex gap-4">
+                            <div class="w-12 h-12 rounded-full bg-purple-100 flex items-center justify-center shrink-0">
+                                <i data-lucide="user-check" class="w-6 h-6 text-purple-600"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-slate-900 mb-1">Mời phỏng vấn trực tiếp</h4>
+                                <p class="text-slate-600 text-sm">Tiếp cận top talent đã chứng minh năng lực với vị trí của bạn.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <a href="{% url 'home' %}" class="inline-block mt-10 bg-slate-900 hover:bg-slate-800 text-white px-8 py-4 rounded-xl font-semibold transition">
+                        Đăng ký tuyển dụng
+                    </a>
+                </div>
+
+                <div class="bg-slate-50 rounded-3xl p-8 border border-slate-200">
+                    <h3 class="font-bold text-slate-900 mb-6">Doanh nghiệp đang tuyển dụng</h3>
+                    <div class="space-y-4">
+                        <div class="bg-white p-4 rounded-xl border border-slate-200 flex items-center gap-4">
+                            <div class="w-14 h-14 bg-red-100 rounded-lg flex items-center justify-center font-bold text-red-600 text-xl">V</div>
+                            <div class="flex-1">
+                                <div class="font-bold text-slate-900">VNG Corporation</div>
+                                <div class="text-sm text-slate-500">12 vị trí đang mở</div>
+                            </div>
+                            <button class="text-blue-600 font-semibold text-sm">Xem</button>
+                        </div>
+
+                        <div class="bg-white p-4 rounded-xl border border-slate-200 flex items-center gap-4">
+                            <div class="w-14 h-14 bg-blue-100 rounded-lg flex items-center justify-center font-bold text-blue-600 text-xl">M</div>
+                            <div class="flex-1">
+                                <div class="font-bold text-slate-900">Momo</div>
+                                <div class="text-sm text-slate-500">8 vị trí đang mở</div>
+                            </div>
+                            <button class="text-blue-600 font-semibold text-sm">Xem</button>
+                        </div>
+
+                        <div class="bg-white p-4 rounded-xl border border-slate-200 flex items-center gap-4">
+                            <div class="w-14 h-14 bg-green-100 rounded-lg flex items-center justify-center font-bold text-green-600 text-xl">S</div>
+                            <div class="flex-1">
+                                <div class="font-bold text-slate-900">Shopee Vietnam</div>
+                                <div class="text-sm text-slate-500">15 vị trí đang mở</div>
+                            </div>
+                            <button class="text-blue-600 font-semibold text-sm">Xem</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-20 bg-slate-900">
+        <div class="max-w-4xl mx-auto px-4 text-center">
+            <h2 class="text-4xl font-bold text-white mb-6">Sẵn sàng chứng minh năng lực?</h2>
+            <p class="text-slate-400 text-lg mb-10">
+                Tham gia cộng đồng lập trình viên hàng đầu Việt Nam. Hoàn toàn miễn phí.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="{% url 'home' %}" class="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-xl font-bold text-lg transition shadow-lg shadow-blue-600/25">
+                    Bắt đầu với Tutorial
+                </a>
+                <a href="#learn-more" class="bg-white/10 hover:bg-white/20 text-white border border-white/20 px-8 py-4 rounded-xl font-bold text-lg transition backdrop-blur">
+                    Tìm hiểu thêm
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-slate-50 border-t border-slate-200 pt-16 pb-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-4 gap-8 mb-12">
+                <div>
+                    <div class="flex items-center gap-2 mb-4">
+                        <div class="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
+                            <i data-lucide="code-2" class="text-white w-5 h-5"></i>
+                        </div>
+                        <span class="font-bold text-xl text-slate-900">SkillRank</span>
+                    </div>
+                    <p class="text-slate-500 text-sm leading-relaxed">
+                        Nền tảng kết nối tài năng IT và doanh nghiệp dựa trên năng lực thực tế.
+                    </p>
+                </div>
+                
+                <div>
+                    <h4 class="font-bold text-slate-900 mb-4">Dành cho ứng viên</h4>
+                    <ul class="space-y-2 text-sm text-slate-600">
+                        <li><a href="#" class="hover:text-blue-600">Làm bài thử thách</a></li>
+                        <li><a href="#" class="hover:text-blue-600">Bảng xếp hạng</a></li>
+                        <li><a href="#" class="hover:text-blue-600">Hướng dẫn học</a></li>
+                        <li><a href="#" class="hover:text-blue-600">Cơ hội việc làm</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="font-bold text-slate-900 mb-4">Dành cho doanh nghiệp</h4>
+                    <ul class="space-y-2 text-sm text-slate-600">
+                        <li><a href="#" class="hover:text-blue-600">Đăng thử thách</a></li>
+                        <li><a href="#" class="hover:text-blue-600">Tìm kiếm nhân tài</a></li>
+                        <li><a href="#" class="hover:text-blue-600">Giải pháp tuyển dụng</a></li>
+                        <li><a href="#" class="hover:text-blue-600">Liên hệ hợp tác</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="font-bold text-slate-900 mb-4">Liên hệ</h4>
+                    <ul class="space-y-2 text-sm text-slate-600">
+                        <li>contact@skillrank.vn</li>
+                        <li>+84 123 456 789</li>
+                        <li>TP. Hồ Chí Minh, Việt Nam</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-slate-200 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+                <p class="text-slate-500 text-sm">© 2024 SkillRank. All rights reserved.</p>
+                <div class="flex gap-6">
+                    <a href="#" class="text-slate-400 hover:text-slate-600"><i data-lucide="github" class="w-5 h-5"></i></a>
+                    <a href="#" class="text-slate-400 hover:text-slate-600"><i data-lucide="linkedin" class="w-5 h-5"></i></a>
+                    <a href="#" class="text-slate-400 hover:text-slate-600"><i data-lucide="twitter" class="w-5 h-5"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+    </script>
+</body>
+</html>
