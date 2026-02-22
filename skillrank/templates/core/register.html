@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="vi">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Đăng ký | SkillRank - Nền tảng IT Challenges</title>
+    <title>Register | SkillRank - IT Challenges Platform</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -744,10 +744,10 @@
             <span>SkillRank</span>
         </div>
         
-        <h1 class="headline">Bắt đầu hành trình IT của bạn</h1>
+        <h1 class="headline">Start your IT journey</h1>
         <p class="subheadline">
-            Tham gia cộng đồng lập trình viên hàng đầu. Giải quyết thử thách thực tế, 
-            xây dựng portfolio và được tuyển dụng bởi các công ty công nghệ hàng đầu.
+            Join the top developer community. Solve real challenges, 
+            build portfolio and get hired by leading tech companies.
         </p>
 
         <div class="features">
@@ -755,19 +755,19 @@
                 <div class="feature-icon">
                     <i class="fas fa-trophy"></i>
                 </div>
-                <span>Thử thách từ các công ty công nghệ hàng đầu</span>
+                <span>Challenges from leading tech companies</span>
             </div>
             <div class="feature-item">
                 <div class="feature-icon">
                     <i class="fas fa-chart-line"></i>
                 </div>
-                <span>Xếp hạng dựa trên kỹ năng thực tế, không phải bằng cấp</span>
+                <span>Rankings based on real skills, not degrees</span>
             </div>
             <div class="feature-item">
                 <div class="feature-icon">
                     <i class="fas fa-briefcase"></i>
                 </div>
-                <span>Cơ hội việc làm từ nhà tuyển dụng uy tín</span>
+                <span>Job opportunities from reputable employers</span>
             </div>
         </div>
     </div>
@@ -776,8 +776,8 @@
     <div class="form-section">
         <div class="form-container">
             <div class="form-header">
-                <h2>Tạo tài khoản</h2>
-                <p>Chọn vai trò của bạn để bắt đầu</p>
+                <h2>Create account</h2>
+                <p>Choose your role to get started</p>
             </div>
 
             <form id="registerForm" action="{% url 'register' %}" method="POST">
@@ -797,8 +797,8 @@
                             <div class="role-icon">
                                 <i class="fas fa-user-graduate"></i>
                             </div>
-                            <div class="role-label">Ứng viên</div>
-                            <div class="role-desc">Tìm việc & Giải thử thách</div>
+                            <div class="role-label">Candidate</div>
+                            <div class="role-desc">Find jobs & Solve challenges</div>
                         </div>
                     </label>
                     <label class="role-option">
@@ -807,8 +807,8 @@
                             <div class="role-icon">
                                 <i class="fas fa-building"></i>
                             </div>
-                            <div class="role-label">Nhà tuyển dụng</div>
-                            <div class="role-desc">Đăng thử thách & Tuyển dụng</div>
+                            <div class="role-label">Employer</div>
+                            <div class="role-desc">Post challenges & Recruit</div>
                         </div>
                     </label>
                 </div>
@@ -817,32 +817,32 @@
                 <div id="candidateFields">
                     <!-- Full Name -->
                     <div class="form-group">
-                        <label class="form-label">Họ và tên</label>
+                        <label class="form-label">Full name</label>
                         <div class="input-wrapper">
                             <i class="fas fa-user input-icon"></i>
-                            <input type="text" class="form-input" id="fullName" name="fullName" placeholder="Nguyễn Văn A">
+                            <input type="text" class="form-input" id="fullName" name="fullName" placeholder="John Doe">
                         </div>
                         <div class="validation-hint" id="nameHint">
                             <i class="fas fa-info-circle"></i>
-                            <span>Tên phải có ít nhất 2 ký tự</span>
+                            <span>Name must be at least 2 characters</span>
                         </div>
                     </div>
 
                     <!-- University -->
                     <div class="form-group">
-                        <label class="form-label">Trường đại học</label>
+                        <label class="form-label">University</label>
                         <div class="input-wrapper">
                             <i class="fas fa-school input-icon"></i>
-                            <input type="text" class="form-input" id="university" name="university" placeholder="Đại học Bách Khoa Hà Nội">
+                            <input type="text" class="form-input" id="university" name="university" placeholder="Hanoi University of Science and Technology">
                         </div>
                     </div>
 
                     <!-- Major -->
                     <div class="form-group">
-                        <label class="form-label">Chuyên ngành</label>
+                        <label class="form-label">Major</label>
                         <div class="input-wrapper">
                             <i class="fas fa-book input-icon"></i>
-                            <input type="text" class="form-input" id="major" name="major" placeholder="Công nghệ thông tin">
+                            <input type="text" class="form-input" id="major" name="major" placeholder="Computer Science">
                         </div>
                     </div>
                 </div>
@@ -851,36 +851,36 @@
                 <div id="companyFields" style="display: none;">
                     <!-- Company Name -->
                     <div class="form-group">
-                        <label class="form-label">Tên công ty</label>
+                        <label class="form-label">Company name</label>
                         <div class="input-wrapper">
                             <i class="fas fa-building input-icon"></i>
-                            <input type="text" class="form-input" id="companyName" name="companyName" placeholder="Công ty TNHH ABC">
+                            <input type="text" class="form-input" id="companyName" name="companyName" placeholder="ABC Company Ltd.">
                         </div>
                         <div class="validation-hint" id="companyNameHint">
                             <i class="fas fa-info-circle"></i>
-                            <span>Vui lòng nhập tên công ty</span>
+                            <span>Please enter company name</span>
                         </div>
                     </div>
 
                     <!-- Industry -->
                     <div class="form-group">
-                        <label class="form-label">Lĩnh vực</label>
+                        <label class="form-label">Industry</label>
                         <div class="input-wrapper">
                             <i class="fas fa-industry input-icon"></i>
-                            <input type="text" class="form-input" id="industry" name="industry" placeholder="Công nghệ, Fintech, v.v.">
+                            <input type="text" class="form-input" id="industry" name="industry" placeholder="Technology, Fintech, etc.">
                         </div>
                     </div>
 
                     <!-- Tax Code -->
                     <div class="form-group">
-                        <label class="form-label">Mã số thuế</label>
+                        <label class="form-label">Tax code</label>
                         <div class="input-wrapper">
                             <i class="fas fa-file-invoice input-icon"></i>
                             <input type="text" class="form-input" id="taxCode" name="taxCode" placeholder="0123456789">
                         </div>
                         <div class="validation-hint" id="taxCodeHint">
                             <i class="fas fa-info-circle"></i>
-                            <span>Mã số thuế không hợp lệ</span>
+                            <span>Invalid tax code</span>
                         </div>
                     </div>
 
@@ -895,7 +895,7 @@
 
                     <!-- Phone -->
                     <div class="form-group">
-                        <label class="form-label">Số điện thoại</label>
+                        <label class="form-label">Phone number</label>
                         <div class="input-wrapper">
                             <i class="fas fa-phone input-icon"></i>
                             <input type="tel" class="form-input" id="phone" name="phone" placeholder="0987654321">
@@ -912,13 +912,13 @@
                     </div>
                     <div class="validation-hint" id="emailHint">
                         <i class="fas fa-info-circle"></i>
-                        <span>Nhập email hợp lệ</span>
+                        <span>Enter valid email</span>
                     </div>
                 </div>
 
                 <!-- Password -->
                 <div class="form-group">
-                    <label class="form-label">Mật khẩu</label>
+                    <label class="form-label">Password</label>
                     <div class="input-wrapper">
                         <i class="fas fa-lock input-icon"></i>
                         <input type="password" class="form-input" id="password" name="password" placeholder="••••••••" required>
@@ -929,20 +929,20 @@
                     </div>
                     <div class="validation-hint" id="passwordHint">
                         <i class="fas fa-info-circle"></i>
-                        <span>Ít nhất 8 ký tự, bao gồm chữ hoa, chữ thường và số</span>
+                        <span>At least 8 characters, including uppercase, lowercase and numbers</span>
                     </div>
                 </div>
 
                 <!-- Confirm Password -->
                 <div class="form-group">
-                    <label class="form-label">Xác nhận mật khẩu</label>
+                    <label class="form-label">Confirm password</label>
                     <div class="input-wrapper">
                         <i class="fas fa-lock input-icon"></i>
                         <input type="password" class="form-input" id="confirmPassword" name="confirmPassword" placeholder="••••••••" required>
                     </div>
                     <div class="validation-hint" id="confirmHint">
                         <i class="fas fa-info-circle"></i>
-                        <span>Mật khẩu không khớp</span>
+                        <span>Passwords do not match</span>
                     </div>
                 </div>
 
@@ -950,18 +950,18 @@
                 <div class="terms">
                     <input type="checkbox" id="agreeTerms" required>
                     <label for="agreeTerms">
-                        Tôi đồng ý với <a href="#">Điều khoản sử dụng</a> và <a href="#">Chính sách bảo mật</a> của SkillRank
+                        I agree to SkillRank's <a href="#">Terms of Use</a> and <a href="#">Privacy Policy</a>
                     </label>
                 </div>
 
                 <!-- Submit Button -->
                 <button type="submit" class="submit-btn" id="submitBtn">
-                    <span>Tạo tài khoản</span>
+                    <span>Create account</span>
                 </button>
             </form>
 
             <div class="divider">
-                <span>Hoặc đăng ký với</span>
+                <span>Or sign up with</span>
             </div>
 
             <div class="social-login">
@@ -976,7 +976,7 @@
             </div>
 
             <div class="login-link">
-                Đã có tài khoản?<a href="{% url 'login' %}">Đăng nhập ngay</a>
+                Already have an account?<a href="{% url 'login' %}">Log in now</a>
             </div>
         </div>
     </div>
@@ -987,9 +987,9 @@
             <div class="success-icon">
                 <i class="fas fa-check"></i>
             </div>
-            <h3>Đăng ký thành công!</h3>
-            <p>Chào mừng bạn đến với SkillRank. Kiểm tra email để xác nhận tài khoản.</p>
-            <button class="modal-btn" onclick="closeModal()">Bắt đầu khám phá</button>
+            <h3>Registration successful!</h3>
+            <p>Welcome to SkillRank. Check your email to verify your account.</p>
+            <button class="modal-btn" onclick="closeModal()">Start exploring</button>
         </div>
     </div>
 
@@ -1040,13 +1040,13 @@
         // Real-time validation
         fullName.addEventListener('input', () => {
             const isValid = fullName.value.length >= 2;
-            updateValidation(fullName, nameHint, isValid, 'Tên hợp lệ', 'Tên phải có ít nhất 2 ký tự');
+            updateValidation(fullName, nameHint, isValid, 'Valid name', 'Name must be at least 2 characters');
         });
 
         email.addEventListener('input', () => {
             const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             const isValid = emailRegex.test(email.value);
-            updateValidation(email, emailHint, isValid, 'Email hợp lệ', 'Email không hợp lệ');
+            updateValidation(email, emailHint, isValid, 'Valid email', 'Invalid email');
         });
 
         email.addEventListener('blur', checkEmailExists);
@@ -1058,7 +1058,7 @@
             const hasNumber = /[0-9]/.test(value);
             const isValid = value.length >= 8 && hasUpper && hasLower && hasNumber;
             
-            updateValidation(password, passwordHint, isValid, 'Mật khẩu mạnh', 'Mật khẩu cần ít nhất 8 ký tự, chữ hoa, chữ thường và số');
+            updateValidation(password, passwordHint, isValid, 'Strong password', 'Password needs at least 8 characters, uppercase, lowercase and numbers');
             
             // Update strength meter
             strengthMeter.classList.add('show');
@@ -1075,13 +1075,13 @@
             // Check confirm password match
             if (confirmPassword.value) {
                 const match = password.value === confirmPassword.value;
-                updateValidation(confirmPassword, confirmHint, match, 'Mật khẩu khớp', 'Mật khẩu không khớp');
+                updateValidation(confirmPassword, confirmHint, match, 'Passwords match', 'Passwords do not match');
             }
         });
 
         confirmPassword.addEventListener('input', () => {
             const match = password.value === confirmPassword.value && confirmPassword.value !== '';
-            updateValidation(confirmPassword, confirmHint, match, 'Mật khẩu khớp', 'Mật khẩu không khớp');
+            updateValidation(confirmPassword, confirmHint, match, 'Passwords match', 'Passwords do not match');
         });
 
         function updateValidation(input, hint, isValid, validMsg, invalidMsg) {
@@ -1110,21 +1110,21 @@
         async function checkEmailExists() {
             const emailValue = email.value.trim();
             if (emailValue === '' || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailValue)) {
-                return; // Không kiểm tra nếu email rỗng hoặc không hợp lệ
+                return; // Do not check if email is empty or invalid
             }
             try {
                 const response = await fetch(`{% url 'check_email' %}?email=${encodeURIComponent(emailValue)}`);
                 const data = await response.json();
                 if (data.exists) {
-                    updateValidation(email, emailHint, false, '', 'Email đã được sử dụng');
+                    updateValidation(email, emailHint, false, '', 'Email already in use');
                 } else {
                     // Nếu không trùng, kiểm tra format lại
                     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
                     const isValid = emailRegex.test(emailValue);
-                    updateValidation(email, emailHint, isValid, 'Email hợp lệ', 'Email không hợp lệ');
+                    updateValidation(email, emailHint, isValid, 'Valid email', 'Invalid email');
                 }
             } catch (error) {
-                console.error('Lỗi kiểm tra email:', error);
+                console.error('Error checking email:', error);
             }
         }
 
