@@ -130,7 +130,7 @@
                 <!-- Login Form -->
                 <form method="POST" action="{% url 'login' %}" class="space-y-6">
                     {% csrf_token %}
-                    
+                    <input type="hidden" name="user_type" id="user_type" value="candidate"> <!-- Hidden input to track user type -->
                     <div class="text-center mb-6">
                         <h2 class="text-2xl font-bold text-slate-900">Login</h2>
                         <p class="text-slate-500 text-sm mt-1">Enter your account information</p>
@@ -265,6 +265,7 @@
         const tabCandidate = document.getElementById('tab-candidate');
         const tabCompany = document.getElementById('tab-company');
         const companyNotice = document.getElementById('company-notice');
+        const userTypeInput = document.getElementById('user_type'); // Hidden input to track user type
 
         tabCandidate.addEventListener('click', () => {
             tabCandidate.classList.remove('tab-inactive');
@@ -272,6 +273,7 @@
             tabCompany.classList.remove('tab-active');
             tabCompany.classList.add('tab-inactive');
             companyNotice.classList.add('hidden');
+            userTypeInput.value = 'candidate'; // Set hidden input value for candidate
         });
 
         tabCompany.addEventListener('click', () => {
@@ -280,6 +282,7 @@
             tabCandidate.classList.remove('tab-active');
             tabCandidate.classList.add('tab-inactive');
             companyNotice.classList.remove('hidden');
+            userTypeInput.value = 'company'; // Set hidden input value for company
         });
     </script>
 </body>
