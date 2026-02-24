@@ -1,0 +1,1105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SkillRank - Post New Challenge</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --secondary: #ec4899;
+            --accent: #8b5cf6;
+            --dark: #0f172a;
+            --light: #f8fafc;
+            --gray: #64748b;
+            --success: #10b981;
+            --error: #ef4444;
+            --warning: #f59e0b;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--dark);
+            color: white;
+            min-height: 100vh;
+        }
+
+        /* Background Animation */
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #312e81 100%);
+            overflow: hidden;
+        }
+
+        .bg-animation::before {
+            content: '';
+            position: absolute;
+            width: 150%;
+            height: 150%;
+            background: radial-gradient(circle, rgba(99, 102, 241, 0.15) 0%, transparent 60%);
+            animation: float 20s infinite ease-in-out;
+            top: -25%;
+            left: -25%;
+        }
+
+        .bg-animation::after {
+            content: '';
+            position: absolute;
+            width: 150%;
+            height: 150%;
+            background: radial-gradient(circle, rgba(236, 72, 153, 0.1) 0%, transparent 60%);
+            animation: float 25s infinite ease-in-out reverse;
+            bottom: -25%;
+            right: -25%;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(30px, -30px) scale(1.1); }
+            66% { transform: translate(-20px, 20px) scale(0.9); }
+        }
+
+        .shape {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.4;
+            animation: shape-float 15s infinite ease-in-out;
+        }
+
+        .shape-1 {
+            width: 400px;
+            height: 400px;
+            background: var(--primary);
+            top: -100px;
+            right: -100px;
+        }
+
+        .shape-2 {
+            width: 300px;
+            height: 300px;
+            background: var(--secondary);
+            bottom: -50px;
+            left: -50px;
+            animation-delay: -5s;
+        }
+
+        .shape-3 {
+            width: 200px;
+            height: 200px;
+            background: var(--accent);
+            top: 50%;
+            left: 30%;
+            animation-delay: -10s;
+        }
+
+        /* Navigation */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 1.25rem;
+            font-weight: 800;
+            color: white;
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            width: 35px;
+            height: 35px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+        }
+
+        .nav-link {
+            color: #94a3b8;
+            text-decoration: none;
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            transition: all 0.3s;
+        }
+
+        .nav-link:hover {
+            background: rgba(255, 255, 255, 0.05);
+            color: white;
+        }
+
+        .nav-link.active {
+            background: rgba(99, 102, 241, 0.1);
+            color: var(--primary);
+        }
+
+        .company-badge {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.5rem 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 50px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .company-avatar {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .company-info {
+            line-height: 1.4;
+        }
+
+        .company-name {
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .company-role {
+            font-size: 0.75rem;
+            color: #94a3b8;
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+
+        /* Header */
+        .page-header {
+            margin-bottom: 2rem;
+            animation: slideUp 0.6s ease-out;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .page-header h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #fff 0%, #a5b4fc 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.5rem;
+        }
+
+        .page-header p {
+            color: #94a3b8;
+        }
+
+        /* Create Challenge Form */
+        .create-section {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 1.5rem;
+            animation: slideUp 0.6s ease-out 0.1s both;
+        }
+
+        .form-container {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            padding: 2rem;
+        }
+
+        .form-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .form-header h2 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .form-header h2 i {
+            color: var(--primary);
+        }
+
+        .form-status {
+            padding: 0.25rem 0.75rem;
+            background: rgba(245, 158, 11, 0.2);
+            border: 1px solid rgba(245, 158, 11, 0.3);
+            border-radius: 50px;
+            color: var(--warning);
+            font-size: 0.8rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            color: #cbd5e1;
+            font-size: 0.9rem;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+        }
+
+        .form-label i {
+            color: var(--primary);
+            margin-right: 0.5rem;
+            width: 16px;
+        }
+
+        .form-input, .form-textarea, .form-select {
+            width: 100%;
+            padding: 0.875rem 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            color: white;
+            font-size: 0.95rem;
+            transition: all 0.3s;
+            outline: none;
+        }
+
+        .form-select option {
+            background: rgba(15, 23, 42, 0.95);
+            color: white;
+            padding: 0.5rem;
+        }
+
+        .form-select option:checked {
+            background: var(--primary);
+            color: white;
+        }
+
+        .form-input:focus, .form-textarea:focus, .form-select:focus {
+            border-color: var(--primary);
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .form-textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        /* Difficulty Selector */
+        .difficulty-selector {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .difficulty-option {
+            flex: 1;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .difficulty-option input {
+            position: absolute;
+            opacity: 0;
+        }
+
+        .difficulty-card {
+            padding: 0.75rem;
+            text-align: center;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            transition: all 0.3s;
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .difficulty-option input:checked + .difficulty-card {
+            border-color: var(--primary);
+            background: rgba(99, 102, 241, 0.1);
+        }
+
+        .difficulty-card.easy { color: var(--success); }
+        .difficulty-card.medium { color: var(--warning); }
+        .difficulty-card.hard { color: var(--error); }
+
+        /* Tags Input */
+        .tags-input-container {
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 0.5rem;
+        }
+
+        .tags-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .tag-item {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.25rem 0.75rem;
+            background: rgba(99, 102, 241, 0.2);
+            border: 1px solid rgba(99, 102, 241, 0.3);
+            border-radius: 50px;
+            color: var(--primary);
+            font-size: 0.85rem;
+        }
+
+        .tag-item i {
+            cursor: pointer;
+            font-size: 0.8rem;
+        }
+
+        .tag-item i:hover {
+            color: var(--error);
+        }
+
+        .tags-input {
+            width: 100%;
+            padding: 0.5rem;
+            background: transparent;
+            border: none;
+            color: white;
+            outline: none;
+        }
+
+        .tags-input::placeholder {
+            color: #64748b;
+        }
+
+        /* Test Cases */
+        .test-cases {
+            margin-top: 1rem;
+        }
+
+        .test-case-item {
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .test-case-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.75rem;
+        }
+
+        .test-case-title {
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        .test-case-actions i {
+            color: #64748b;
+            margin-left: 0.5rem;
+            cursor: pointer;
+        }
+
+        .test-case-actions i:hover {
+            color: var(--error);
+        }
+
+        .add-test-case {
+            padding: 0.75rem;
+            background: rgba(99, 102, 241, 0.1);
+            border: 2px dashed rgba(99, 102, 241, 0.3);
+            border-radius: 12px;
+            color: var(--primary);
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .add-test-case:hover {
+            background: rgba(99, 102, 241, 0.2);
+        }
+
+        /* Form Actions */
+        .form-actions {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .btn {
+            padding: 0.875rem 1.5rem;
+            border: none;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            flex: 1;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(99, 102, 241, 0.4);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.05);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .btn-danger {
+            background: rgba(239, 68, 68, 0.1);
+            color: var(--error);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+        }
+
+        .btn-danger:hover {
+            background: rgba(239, 68, 68, 0.2);
+        }
+
+        /* Right Sidebar */
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .info-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 1.5rem;
+        }
+
+        .info-card h3 {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #cbd5e1;
+        }
+
+        .info-card h3 i {
+            color: var(--primary);
+        }
+
+        .guidelines-list {
+            list-style: none;
+        }
+
+        .guidelines-list li {
+            color: #94a3b8;
+            font-size: 0.9rem;
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .guidelines-list li i {
+            color: var(--success);
+            font-size: 0.8rem;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 12px;
+        }
+
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .stat-label {
+            color: #94a3b8;
+            font-size: 0.8rem;
+            margin-top: 0.25rem;
+        }
+
+        .preview-card {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 12px;
+            padding: 1rem;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .preview-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.75rem;
+        }
+
+        .preview-title {
+            font-weight: 600;
+            color: white;
+        }
+
+        .preview-badge {
+            padding: 0.2rem 0.5rem;
+            background: rgba(16, 185, 129, 0.2);
+            border-radius: 4px;
+            color: var(--success);
+            font-size: 0.7rem;
+        }
+
+        .preview-desc {
+            color: #94a3b8;
+            font-size: 0.85rem;
+            margin-bottom: 0.75rem;
+            line-height: 1.4;
+        }
+
+        .preview-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .preview-tag {
+            padding: 0.2rem 0.5rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 4px;
+            font-size: 0.7rem;
+            color: #94a3b8;
+        }
+
+        /* Recent Challenges */
+        .recent-challenges {
+            margin-top: 2rem;
+            animation: slideUp 0.6s ease-out 0.2s both;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .section-header h2 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .view-all {
+            color: var(--primary);
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+
+        .challenges-table {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            overflow: hidden;
+        }
+
+        .table-row {
+            display: grid;
+            grid-template-columns: 3fr 1fr 1fr 1fr 0.5fr;
+            padding: 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            align-items: center;
+        }
+
+        .table-row.header {
+            background: rgba(0, 0, 0, 0.3);
+            color: #94a3b8;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        .table-row:last-child {
+            border-bottom: none;
+        }
+
+        .challenge-info {
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+        }
+
+        .challenge-name {
+            font-weight: 500;
+            color: white;
+        }
+
+        .challenge-meta {
+            font-size: 0.8rem;
+            color: #64748b;
+        }
+
+        .status-badge {
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            text-align: center;
+        }
+
+        .status-active {
+            background: rgba(16, 185, 129, 0.2);
+            color: var(--success);
+        }
+
+        .status-draft {
+            background: rgba(245, 158, 11, 0.2);
+            color: var(--warning);
+        }
+
+        .action-btn {
+            padding: 0.25rem 0.5rem;
+            background: transparent;
+            border: none;
+            color: #64748b;
+            cursor: pointer;
+        }
+
+        .action-btn:hover {
+            color: var(--primary);
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .create-section {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .table-row {
+                grid-template-columns: 1fr;
+                gap: 0.5rem;
+            }
+
+            .table-row.header {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Background Animation -->
+    <div class="bg-animation">
+        <div class="shape shape-1"></div>
+        <div class="shape shape-2"></div>
+        <div class="shape shape-3"></div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <a href="#" class="logo">
+            <div class="logo-icon">
+                <i class="fas fa-code"></i>
+            </div>
+            <span>SkillRank</span>
+        </a>
+
+        <div class="nav-links">
+            <a href="#" class="nav-link">
+                <i class="fas fa-tasks"></i> Challenges
+            </a>
+            <a href="#" class="nav-link active">
+                <i class="fas fa-plus-circle"></i> Post Challenge
+            </a>
+            <a href="#" class="nav-link">
+                <i class="fas fa-chart-bar"></i> Statistics
+            </a>
+            <a href="#" class="nav-link">
+                <i class="fas fa-users"></i> Candidates
+            </a>
+        </div>
+
+        <div class="company-badge">
+            <div class="company-avatar">FPT</div>
+            <div class="company-info">
+                <div class="company-name">FPT Software</div>
+                <div class="company-role">Employer</div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Page Header -->
+        <div class="page-header">
+            <h1>Post New Challenge</h1>
+            <p>Create programming challenges to find potential candidates</p>
+        </div>
+
+        <!-- Create Challenge Section -->
+        <div class="create-section">
+            <!-- Main Form -->
+            <div class="form-container">
+                <div class="form-header">
+                    <h2>
+                        <i class="fas fa-edit"></i>
+                        Challenge Information
+                    </h2>
+                    <span class="form-status">Draft</span>
+                </div>
+
+                <form id="createChallengeForm">
+                    <!-- Basic Info -->
+                    <div class="form-group">
+                        <label class="form-label">
+                            <i class="fas fa-heading"></i>
+                            Challenge Name <span style="color: var(--error);">*</span>
+                        </label>
+                        <input type="text" class="form-input" placeholder="E.g.: Build RESTful API for student management" value="Build Basic RESTful API">
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">
+                                <i class="fas fa-building"></i>
+                                Company
+                            </label>
+                            <input type="text" class="form-input" value="FPT Software" readonly>
+                        </div>
+                        <div class="form-group" background="rgba(255, 255, 255, 0.05)">
+                            <label class="form-label">
+                                <i class="fas fa-tag"></i>
+                                Category
+                            </label>
+                            <select class="form-select">
+                                <option value="backend" selected>Backend Development</option>
+                                <option value="frontend">Frontend Development</option>
+                                <option value="fullstack">Full Stack Development</option>
+                                <option value="mobile">Mobile Development</option>
+                                <option value="data">Data Science & Analytics</option>
+                                <option value="ai">Artificial Intelligence & Machine Learning</option>
+                                <option value="devops">DevOps & Infrastructure</option>
+                                <option value="security">Cybersecurity</option>
+                                <option value="embedded">Embedded Systems</option>
+                                <option value="game">Game Development</option>
+                                <option value="image_processing">Computer Vision & Image Processing</option>
+                                <option value="blockchain">Blockchain</option>
+                                <option value="cloud">Cloud Computing</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Difficulty -->
+                    <div class="form-group">
+                        <label class="form-label">
+                            <i class="fas fa-signal"></i>
+                            Difficulty
+                        </label>
+                        <div class="difficulty-selector">
+                            <label class="difficulty-option">
+                                <input type="radio" name="difficulty" value="easy" checked>
+                                <div class="difficulty-card easy">
+                                    <i class="fas fa-smile"></i> Easy
+                                </div>
+                            </label>
+                            <label class="difficulty-option">
+                                <input type="radio" name="difficulty" value="medium">
+                                <div class="difficulty-card medium">
+                                    <i class="fas fa-meh"></i> Medium
+                                </div>
+                            </label>
+                            <label class="difficulty-option">
+                                <input type="radio" name="difficulty" value="hard">
+                                <div class="difficulty-card hard">
+                                    <i class="fas fa-frown"></i> Hard
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Points -->
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">
+                                <i class="fas fa-star"></i>
+                                Reward Points
+                            </label>
+                            <input type="number" class="form-input" value="100" min="0" max="1000">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">
+                                <i class="fas fa-clock"></i>
+                                Time (minutes)
+                            </label>
+                            <input type="number" class="form-input" value="120" min="30" step="30">
+                        </div>
+                    </div>
+
+                    <!-- Description -->
+                    <div class="form-group">
+                        <label class="form-label">
+                            <i class="fas fa-align-left"></i>
+                            Detailed Description
+                        </label>
+                        <textarea class="form-textarea">Build a RESTful API for a student management system with basic CRUD operations. The API needs to support the following operations:
+- Get list of students
+- Get student details
+- Add new student
+- Update student information
+- Delete student</textarea>
+                    </div>
+
+                    <!-- Requirements -->
+                    <div class="form-group">
+                        <label class="form-label">
+                            <i class="fas fa-list-check"></i>
+                            Requirements
+                        </label>
+                        <textarea class="form-textarea">- Student data stored in Python list (temporarily)
+- Student ID auto-increment
+- Validate input data: name cannot be empty, age from 18-60
+- Return appropriate status codes (200, 201, 400, 404)</textarea>
+                    </div>
+
+                    <!-- Tags -->
+                    <div class="form-group">
+                        <label class="form-label">
+                            <i class="fas fa-tags"></i>
+                            Required Skills
+                        </label>
+                        <div class="tags-input-container">
+                            <div class="tags-list" id="tagsList">
+                                <span class="tag-item">Python <i class="fas fa-times" onclick="removeTag(this)"></i></span>
+                                <span class="tag-item">Flask <i class="fas fa-times" onclick="removeTag(this)"></i></span>
+                                <span class="tag-item">REST API <i class="fas fa-times" onclick="removeTag(this)"></i></span>
+                                <span class="tag-item">JSON <i class="fas fa-times" onclick="removeTag(this)"></i></span>
+                            </div>
+                            <input type="text" class="tags-input" placeholder="Enter skills and press Enter" id="tagInput" onkeypress="addTag(event)">
+                        </div>
+                    </div>
+
+                    <!-- Test Cases -->
+                    <div class="form-group">
+                        <label class="form-label">
+                            <i class="fas fa-vial"></i>
+                            Test cases
+                        </label>
+                        <div class="test-cases" id="testCases">
+                            <div class="test-case-item">
+                                <div class="test-case-header">
+                                    <span class="test-case-title">Test case 1</span>
+                                    <div class="test-case-actions">
+                                        <i class="fas fa-copy" onclick="duplicateTestCase(this)"></i>
+                                        <i class="fas fa-trash" onclick="deleteTestCase(this)"></i>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <input type="text" class="form-input" placeholder="Đầu vào" value='GET /students'>
+                                    <input type="text" class="form-input" placeholder="Đầu ra mong đợi" value='[{"id":1,"name":"Nguyễn Văn A"}]'>
+                                </div>
+                            </div>
+                            <div class="test-case-item">
+                                <div class="test-case-header">
+                                    <span class="test-case-title">Test case 2</span>
+                                    <div class="test-case-actions">
+                                        <i class="fas fa-copy" onclick="duplicateTestCase(this)"></i>
+                                        <i class="fas fa-trash" onclick="deleteTestCase(this)"></i>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <input type="text" class="form-input" placeholder="Đầu vào" value='POST /students {"name":"Trần Thị B","age":21}'>
+                                    <input type="text" class="form-input" placeholder="Đầu ra mong đợi" value='{"id":2,"name":"Trần Thị B","age":21}'>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="add-test-case" onclick="addTestCase()">
+                            <i class="fas fa-plus"></i> Add test case
+                        </div>
+                    </div>
+
+                    <!-- Form Actions -->
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-secondary" onclick="saveDraft()">
+                            <i class="fas fa-save"></i> Save Draft
+                        </button>
+                        <button type="button" class="btn btn-primary" onclick="previewChallenge()">
+                            <i class="fas fa-eye"></i> Preview
+                        </button>
+                        <button type="submit" class="btn btn-primary" onclick="publishChallenge(event)">
+                            <i class="fas fa-cloud-upload-alt"></i> Post Challenge
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Right Sidebar -->
+            <div class="sidebar">
+                <!-- Guidelines -->
+                <div class="info-card">
+                    <h3>
+                        <i class="fas fa-lightbulb"></i>
+                        Posting Guidelines
+                    </h3>
+                    <ul class="guidelines-list">
+                        <li><i class="fas fa-check-circle"></i> Concise, clear title</li>
+                        <li><i class="fas fa-check-circle"></i> Detailed description of requirements</li>
+                        <li><i class="fas fa-check-circle"></i> Provide sufficient test cases</li>
+                        <li><i class="fas fa-check-circle"></i> Correctly determine difficulty</li>
+                        <li><i class="fas fa-check-circle"></i> Attach appropriate skill tags</li>
+                    </ul>
+                </div>
+
+                <!-- Stats -->
+                <div class="info-card">
+                    <h3>
+                        <i class="fas fa-chart-pie"></i>
+                        Thống kê
+                    </h3>
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <div class="stat-value">12</div>
+                            <div class="stat-label">Challenges Posted</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">234</div>
+                            <div class="stat-label">Participations</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">56</div>
+                            <div class="stat-label">Candidates</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">8</div>
+                            <div class="stat-label">Hired</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Preview -->
+                <div class="info-card">
+                    <h3>
+                        <i class="fas fa-eye"></i>
+                        Preview
+                    </h3>
+                    <div class="preview-card">
+                        <div class="preview-header">
+                            <span class="preview-title">Build Basic RESTful API</span>
+                            <span class="preview-badge">100 points</span>
+                        </div>
+                        <div class="preview-desc">
+                            Build a RESTful API for a student management system...
+                        </div>
+                        <div class="preview-tags">
+                            <span class="preview-tag">Python</span>
+                            <span class="preview-tag">Flask</span>
+                            <span class="preview-tag">REST API</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Recent Challenges -->
+        <div class="recent-challenges">
+            <div class="section-header">
+                <h2>
+                    <i class="fas fa-history"></i>
+                    Recent Challenges
+                </h2>
+                <a href="#" class="view-all">View All <i class="fas fa-arrow-right"></i></a>
+            </div>
+
+            <div class="challenges-table">
+               
