@@ -17,28 +17,25 @@ def register_view(request):
             email = request.POST.get('email')
             phone_number = request.POST.get('phone_number')
             password = make_password(request.POST.get('password'))
-            if Candidate.objects.filter(email=email).exists():
-                print("Email already exists:", email)
-                return render(request, 'core/register.html', {'error': 'Email already exists'})
-
+            print("Received registration data for candidate - Name:", name, "University:", university, "Major:", major, "Email:", email, "Phone:", phone_number, "Password:", password)
             candidate = Candidate(name=name, university=university, major=major, email=email, phone_number=phone_number, password=password)
             candidate.save()
             print("Candidate registered successfully with email:", email)
+            messages.success(request, 'Registration successful! Please check your email to verify your account.')
             return redirect('login')
         elif request.POST.get('role') == 'company':
             name = request.POST.get('companyName')
+            industry = request.POST.get('industry')
             taxid = request.POST.get('taxCode')
-            major = request.POST.get('industry')
+            website = request.POST.get('website')
+            phone_number = request.POST.get('phone')
             email = request.POST.get('email')
-            phone_number = request.POST.get('phone_number')
             password = make_password(request.POST.get('password'))
-            if Company.objects.filter(email=email).exists():
-                print("Email already exists:", email)
-                return render(request, 'core/register.html', {'error': 'Email already exists'})
-
-            company = Company(name=name, taxid=taxid, major=major, email=email, phone_number=phone_number, password=password)
+            print("Received registration data for company - Name:", name, "Industry:", industry, "TaxID:", taxid, "Website:", website, "Phone:", phone_number, "Email:", email, "Password:", password)
+            company = Company(name=name, industry=industry, taxid=taxid, website=website, phone_number=phone_number, email=email, password=password)
             company.save()
             print("Company registered successfully with email:", email)
+            messages.success(request, 'Registration successful! Please check your email to verify your account.')
             return redirect('login')
     print("Nothing posted, rendering register page")
     return render(request, 'core/register.html')
@@ -91,3 +88,16 @@ def check_email(request):
     print("Checking email:", email, "Exists:", exists)
     return JsonResponse({'exists': exists})
 
+def check_taxid(request):
+    taxid = request.GET.get('taxid')
+    exists = Company.objects.filter(taxid=taxid).exists()
+    print("Checking taxid:", taxid, "Exists:", exists)
+    return JsonResponse({'exists': exists})
+
+def getCandidateProfile(request):
+    try:
+        candidate = Candidate.objects.get(id=1)  # Thay 1 bằng ID thực tế của ứng viên
+        print("Candidate profile retrieved successfully for candidate ID:", candidate.id)
+    except Candidate.DoesNotExist:
+        print("No candidate found with the specified ID")
+        return JsonResponse({'error': 'Candidate not found'}, status=404)

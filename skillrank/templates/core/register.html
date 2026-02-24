@@ -845,6 +845,15 @@
                             <input type="text" class="form-input" id="major" name="major" placeholder="Computer Science">
                         </div>
                     </div>
+
+                    <!-- Phone Number -->
+                    <div class="form-group">
+                        <label class="form-label">Phone number</label>
+                        <div class="input-wrapper">
+                            <i class="fas fa-phone input-icon"></i>
+                            <input type="tel" class="form-input" id="phoneCandidate" name="phone_number" placeholder="0987654321">
+                        </div>
+                    </div>
                 </div>
 
                 <!-- Company Fields -->
@@ -1016,12 +1025,30 @@
                 if (e.target.value === 'candidate') {
                     candidateFields.style.display = 'block';
                     companyFields.style.display = 'none';
+                    document.getElementById('fullName').required = true;
+                    document.getElementById('companyName').required = false;
+                    document.getElementById('industry').required = false;
+                    document.getElementById('taxCode').required = false;
+                    document.getElementById('phone').required = false;
                 } else if (e.target.value === 'company') {
                     candidateFields.style.display = 'none';
                     companyFields.style.display = 'block';
+                    document.getElementById('fullName').required = false;
+                    document.getElementById('companyName').required = true;
+                    document.getElementById('industry').required = true;
+                    document.getElementById('taxCode').required = true;
+                    document.getElementById('phone').required = true;
                 }
             });
         });
+
+        // Set initial required attributes based on default role (candidate)
+        document.getElementById('fullName').required = true;
+        document.getElementById('companyName').required = false;
+        document.getElementById('industry').required = false;
+        document.getElementById('taxCode').required = false;
+        document.getElementById('phone').required = false;
+        document.getElementById('phoneCandidate').required = false;
 
         // Validation hints
         const nameHint = document.getElementById('nameHint');
@@ -1050,6 +1077,12 @@
         });
 
         email.addEventListener('blur', checkEmailExists);
+
+        // Tax code validation
+        const taxCode = document.getElementById('taxCode');
+        const taxCodeHint = document.getElementById('taxCodeHint');
+
+        taxCode.addEventListener('blur', checkTaxCodeExists);
 
         password.addEventListener('input', () => {
             const value = password.value;
@@ -1125,6 +1158,27 @@
                 }
             } catch (error) {
                 console.error('Error checking email:', error);
+            }
+        }
+
+        async function checkTaxCodeExists() {
+            const taxCodeValue = taxCode.value.trim();
+            if (taxCodeValue === '') {
+                return; // Do not check if tax code is empty
+            }
+            try {
+                const response = await fetch(`{% url 'check_taxid' %}?taxid=${encodeURIComponent(taxCodeValue)}`);
+                const data = await response.json();
+                if (data.exists) {
+                    updateValidation(taxCode, taxCodeHint, false, '', 'Tax code already in use');
+                } else {
+                    // If not exists, check if it's a valid tax code (assuming 10 digits for Vietnam)
+                    const taxCodeRegex = /^\d{10}$/;
+                    const isValid = taxCodeRegex.test(taxCodeValue);
+                    updateValidation(taxCode, taxCodeHint, isValid, 'Valid tax code', 'Invalid tax code (must be 10 digits)');
+                }
+            } catch (error) {
+                console.error('Error checking tax code:', error);
             }
         }
 
