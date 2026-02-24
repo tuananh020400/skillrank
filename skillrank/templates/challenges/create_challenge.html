@@ -811,9 +811,9 @@
         </div>
 
         <div class="company-badge">
-            <div class="company-avatar">FPT</div>
+            <div class="company-avatar">{{ request.session.company_name|slice:":2"|upper }}</div>
             <div class="company-info">
-                <div class="company-name">FPT Software</div>
+                <div class="company-name">{{ request.session.company_name }}</div>
                 <div class="company-role">Employer</div>
             </div>
         </div>
@@ -846,7 +846,7 @@
                             <i class="fas fa-heading"></i>
                             Challenge Name <span style="color: var(--error);">*</span>
                         </label>
-                        <input type="text" class="form-input" placeholder="E.g.: Build RESTful API for student management" value="Build Basic RESTful API">
+                        <input type="text" class="form-input" placeholder="E.g.: Build RESTful API for student management" value="">
                     </div>
 
                     <div class="form-row">
@@ -855,7 +855,7 @@
                                 <i class="fas fa-building"></i>
                                 Company
                             </label>
-                            <input type="text" class="form-input" value="FPT Software" readonly>
+                            <input type="text" class="form-input" value="{{ request.session.company_name }}" readonly>
                         </div>
                         <div class="form-group" background="rgba(255, 255, 255, 0.05)">
                             <label class="form-label">
@@ -933,12 +933,7 @@
                             <i class="fas fa-align-left"></i>
                             Detailed Description
                         </label>
-                        <textarea class="form-textarea">Build a RESTful API for a student management system with basic CRUD operations. The API needs to support the following operations:
-- Get list of students
-- Get student details
-- Add new student
-- Update student information
-- Delete student</textarea>
+                        <textarea class="form-textarea" placeholder="Enter detailed description of the challenge"></textarea>
                     </div>
 
                     <!-- Requirements -->
@@ -947,10 +942,7 @@
                             <i class="fas fa-list-check"></i>
                             Requirements
                         </label>
-                        <textarea class="form-textarea">- Student data stored in Python list (temporarily)
-- Student ID auto-increment
-- Validate input data: name cannot be empty, age from 18-60
-- Return appropriate status codes (200, 201, 400, 404)</textarea>
+                        <textarea class="form-textarea" placeholder="Enter requirements for the challenge"  ></textarea>
                     </div>
 
                     <!-- Tags -->

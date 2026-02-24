@@ -70,11 +70,14 @@ def login_view(request):
                 company = Company.objects.get(email=email)
                 if check_password(password, company.password):
                     print("Login successful for email:", email)
+                    request.session['company_id'] = company.id
+                    request.session['company_name'] = company.name
+                    return redirect('create_challenge')
                 else:
                     print("Invalid password for email:", email)
                     messages.error(request, 'Invalid password')
                     return render(request, 'core/login.html', {'error': 'Invalid password'})
-                return redirect('home')
+                
             except Company.DoesNotExist:
                 print("No company found with email:", email)
                 messages.error(request, 'Cannot find an company with that email')
