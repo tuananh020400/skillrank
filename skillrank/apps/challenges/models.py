@@ -3,19 +3,26 @@ from django.db import models
 # Create your models here.
 class Challenge(models.Model):
     DIFFICULTY_LEVELS = [
-    ('EASY', 'Easy'),
-    ('MEDIUM', 'Medium'),
-    ('HARD', 'Hard'),]
+        ('EASY', 'Easy'),
+        ('MEDIUM', 'Medium'),
+        ('HARD', 'Hard'),
+    ]
+    STATUS_CHOICES = [
+        ('DRAFT', 'Draft'),
+        ('ACTIVE', 'Active'),
+    ]
     title = models.CharField(max_length=255)
     company = models.ForeignKey('core.Company', on_delete=models.CASCADE, related_name='challenges')
     category = models.CharField(max_length=255, db_index=True)
     difficulty = models.CharField(max_length=50, choices=DIFFICULTY_LEVELS, default='EASY')
-    reward_points = models.IntegerField()
-    description = models.TextField()
-    requirements = models.TextField()
-    required_skills = models.TextField()
+    reward_points = models.IntegerField(default=100)
+    description = models.TextField(blank=True, default='')
+    requirements = models.TextField(blank=True, default='')
+    required_skills = models.TextField(blank=True, default='')
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='DRAFT')
     created_at = models.DateTimeField(auto_now_add=True)
     modified_at = models.DateTimeField(auto_now=True)
+
     def __str__(self):
         return self.title
     

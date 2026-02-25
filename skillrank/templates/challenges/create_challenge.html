@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SkillRank - Post New Challenge</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
@@ -68,9 +70,19 @@
         }
 
         @keyframes float {
-            0%, 100% { transform: translate(0, 0) scale(1); }
-            33% { transform: translate(30px, -30px) scale(1.1); }
-            66% { transform: translate(-20px, 20px) scale(0.9); }
+
+            0%,
+            100% {
+                transform: translate(0, 0) scale(1);
+            }
+
+            33% {
+                transform: translate(30px, -30px) scale(1.1);
+            }
+
+            66% {
+                transform: translate(-20px, 20px) scale(0.9);
+            }
         }
 
         .shape {
@@ -223,6 +235,7 @@
                 opacity: 0;
                 transform: translateY(30px);
             }
+
             to {
                 opacity: 1;
                 transform: translateY(0);
@@ -234,6 +247,7 @@
             font-weight: 700;
             background: linear-gradient(135deg, #fff 0%, #a5b4fc 100%);
             -webkit-background-clip: text;
+            background-clip: text;
             -webkit-text-fill-color: transparent;
             margin-bottom: 0.5rem;
         }
@@ -306,7 +320,9 @@
             width: 16px;
         }
 
-        .form-input, .form-textarea, .form-select {
+        .form-input,
+        .form-textarea,
+        .form-select {
             width: 100%;
             padding: 0.875rem 1rem;
             background: rgba(255, 255, 255, 0.05);
@@ -329,7 +345,9 @@
             color: white;
         }
 
-        .form-input:focus, .form-textarea:focus, .form-select:focus {
+        .form-input:focus,
+        .form-textarea:focus,
+        .form-select:focus {
             border-color: var(--primary);
             background: rgba(255, 255, 255, 0.08);
         }
@@ -371,14 +389,22 @@
             background: rgba(255, 255, 255, 0.02);
         }
 
-        .difficulty-option input:checked + .difficulty-card {
+        .difficulty-option input:checked+.difficulty-card {
             border-color: var(--primary);
             background: rgba(99, 102, 241, 0.1);
         }
 
-        .difficulty-card.easy { color: var(--success); }
-        .difficulty-card.medium { color: var(--warning); }
-        .difficulty-card.hard { color: var(--error); }
+        .difficulty-card.easy {
+            color: var(--success);
+        }
+
+        .difficulty-card.medium {
+            color: var(--warning);
+        }
+
+        .difficulty-card.hard {
+            color: var(--error);
+        }
 
         /* Tags Input */
         .tags-input-container {
@@ -776,8 +802,30 @@
                 display: none;
             }
         }
+
+        /* Hidden Toggle */
+        .hidden-toggle {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+            font-size: 0.85rem;
+            color: #94a3b8;
+            transition: all 0.3s;
+        }
+
+        .hidden-toggle:hover {
+            color: white;
+        }
+
+        .hidden-toggle input[type="checkbox"] {
+            width: 16px;
+            height: 16px;
+            cursor: pointer;
+        }
     </style>
 </head>
+
 <body>
     <!-- Background Animation -->
     <div class="bg-animation">
@@ -821,6 +869,19 @@
 
     <!-- Main Container -->
     <div class="container">
+        {% if messages %}
+        <div style="margin-bottom: 2rem;">
+            {% for message in messages %}
+            <div
+                style="padding: 1rem; border-radius: 12px; margin-bottom: 1rem; background: {% if message.tags == 'success' %}rgba(16, 185, 129, 0.2){% else %}rgba(239, 68, 68, 0.2){% endif %}; border: 1px solid {% if message.tags == 'success' %}var(--success){% else %}var(--error){% endif %}; color: white;">
+                <i class="fas {% if message.tags == 'success' %}fa-check-circle{% else %}fa-exclamation-circle{% endif %}"
+                    style="margin-right: 0.5rem; color: {% if message.tags == 'success' %}var(--success){% else %}var(--error){% endif %};"></i>
+                {{ message }}
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+
         <!-- Page Header -->
         <div class="page-header">
             <h1>Post New Challenge</h1>
@@ -839,14 +900,20 @@
                     <span class="form-status">Draft</span>
                 </div>
 
-                <form id="createChallengeForm">
+                <form id="createChallengeForm" method="POST" action="{% url 'create_challenge' %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="status" id="challengeStatus" value="ACTIVE">
+                    <input type="hidden" name="required_skills" id="hiddenRequiredSkills"
+                        value="Python, Flask, REST API, JSON">
+
                     <!-- Basic Info -->
                     <div class="form-group">
                         <label class="form-label">
                             <i class="fas fa-heading"></i>
                             Challenge Name <span style="color: var(--error);">*</span>
                         </label>
-                        <input type="text" class="form-input" placeholder="E.g.: Build RESTful API for student management" value="">
+                        <input type="text" name="title" class="form-input"
+                            placeholder="E.g.: Build RESTful API for student management" value="" required>
                     </div>
 
                     <div class="form-row">
@@ -857,12 +924,12 @@
                             </label>
                             <input type="text" class="form-input" value="{{ request.session.company_name }}" readonly>
                         </div>
-                        <div class="form-group" background="rgba(255, 255, 255, 0.05)">
+                        <div class="form-group" style="background: rgba(255, 255, 255, 0.05)">
                             <label class="form-label">
                                 <i class="fas fa-tag"></i>
                                 Category
                             </label>
-                            <select class="form-select">
+                            <select name="category" class="form-select">
                                 <option value="backend" selected>Backend Development</option>
                                 <option value="frontend">Frontend Development</option>
                                 <option value="fullstack">Full Stack Development</option>
@@ -916,14 +983,7 @@
                                 <i class="fas fa-star"></i>
                                 Reward Points
                             </label>
-                            <input type="number" class="form-input" value="100" min="0" max="1000">
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label">
-                                <i class="fas fa-clock"></i>
-                                Time (minutes)
-                            </label>
-                            <input type="number" class="form-input" value="120" min="30" step="30">
+                            <input type="number" name="reward_points" class="form-input" value="100" min="0" max="1000">
                         </div>
                     </div>
 
@@ -933,7 +993,8 @@
                             <i class="fas fa-align-left"></i>
                             Detailed Description
                         </label>
-                        <textarea class="form-textarea" placeholder="Enter detailed description of the challenge"></textarea>
+                        <textarea name="description" class="form-textarea"
+                            placeholder="Enter detailed description of the challenge"></textarea>
                     </div>
 
                     <!-- Requirements -->
@@ -942,7 +1003,8 @@
                             <i class="fas fa-list-check"></i>
                             Requirements
                         </label>
-                        <textarea class="form-textarea" placeholder="Enter requirements for the challenge"  ></textarea>
+                        <textarea name="requirements" class="form-textarea"
+                            placeholder="Enter requirements for the challenge"></textarea>
                     </div>
 
                     <!-- Tags -->
@@ -953,12 +1015,17 @@
                         </label>
                         <div class="tags-input-container">
                             <div class="tags-list" id="tagsList">
-                                <span class="tag-item">Python <i class="fas fa-times" onclick="removeTag(this)"></i></span>
-                                <span class="tag-item">Flask <i class="fas fa-times" onclick="removeTag(this)"></i></span>
-                                <span class="tag-item">REST API <i class="fas fa-times" onclick="removeTag(this)"></i></span>
-                                <span class="tag-item">JSON <i class="fas fa-times" onclick="removeTag(this)"></i></span>
+                                <span class="tag-item">Python <i class="fas fa-times"
+                                        onclick="removeTag(this)"></i></span>
+                                <span class="tag-item">Flask <i class="fas fa-times"
+                                        onclick="removeTag(this)"></i></span>
+                                <span class="tag-item">REST API <i class="fas fa-times"
+                                        onclick="removeTag(this)"></i></span>
+                                <span class="tag-item">JSON <i class="fas fa-times"
+                                        onclick="removeTag(this)"></i></span>
                             </div>
-                            <input type="text" class="tags-input" placeholder="Enter skills and press Enter" id="tagInput" onkeypress="addTag(event)">
+                            <input type="text" class="tags-input" placeholder="Enter skills and press Enter"
+                                id="tagInput" onkeypress="addTag(event)">
                         </div>
                     </div>
 
@@ -972,27 +1039,45 @@
                             <div class="test-case-item">
                                 <div class="test-case-header">
                                     <span class="test-case-title">Test case 1</span>
-                                    <div class="test-case-actions">
+                                    <div class="test-case-actions"
+                                        style="display: flex; align-items: center; gap: 1rem;">
+                                        <label class="hidden-toggle">
+                                            <input type="checkbox"
+                                                onchange="this.nextElementSibling.value = this.checked ? '1' : '0'">
+                                            <input type="hidden" name="test_hidden[]" value="0">
+                                            <span>Hidden</span>
+                                        </label>
                                         <i class="fas fa-copy" onclick="duplicateTestCase(this)"></i>
                                         <i class="fas fa-trash" onclick="deleteTestCase(this)"></i>
                                     </div>
                                 </div>
                                 <div class="form-row">
-                                    <input type="text" class="form-input" placeholder="Đầu vào" value='GET /students'>
-                                    <input type="text" class="form-input" placeholder="Đầu ra mong đợi" value='[{"id":1,"name":"Nguyễn Văn A"}]'>
+                                    <input type="text" name="test_input[]" class="form-input" placeholder="Input"
+                                        value='GET /students'>
+                                    <input type="text" name="test_output[]" class="form-input"
+                                        placeholder="Expected output" value='[{"id":1,"name":"John Doe"}]'>
                                 </div>
                             </div>
                             <div class="test-case-item">
                                 <div class="test-case-header">
                                     <span class="test-case-title">Test case 2</span>
-                                    <div class="test-case-actions">
+                                    <div class="test-case-actions"
+                                        style="display: flex; align-items: center; gap: 1rem;">
+                                        <label class="hidden-toggle">
+                                            <input type="checkbox"
+                                                onchange="this.nextElementSibling.value = this.checked ? '1' : '0'">
+                                            <input type="hidden" name="test_hidden[]" value="0">
+                                            <span>Hidden</span>
+                                        </label>
                                         <i class="fas fa-copy" onclick="duplicateTestCase(this)"></i>
                                         <i class="fas fa-trash" onclick="deleteTestCase(this)"></i>
                                     </div>
                                 </div>
                                 <div class="form-row">
-                                    <input type="text" class="form-input" placeholder="Đầu vào" value='POST /students {"name":"Trần Thị B","age":21}'>
-                                    <input type="text" class="form-input" placeholder="Đầu ra mong đợi" value='{"id":2,"name":"Trần Thị B","age":21}'>
+                                    <input type="text" name="test_input[]" class="form-input" placeholder="Input"
+                                        value='POST /students {"name":"Jane Smith","age":21}'>
+                                    <input type="text" name="test_output[]" class="form-input"
+                                        placeholder="Expected output" value='{"id":2,"name":"Jane Smith","age":21}'>
                                 </div>
                             </div>
                         </div>
@@ -1037,7 +1122,7 @@
                 <div class="info-card">
                     <h3>
                         <i class="fas fa-chart-pie"></i>
-                        Thống kê
+                        Statistics
                     </h3>
                     <div class="stats-grid">
                         <div class="stat-item">
@@ -1094,4 +1179,158 @@
             </div>
 
             <div class="challenges-table">
-               
+                <div class="table-row header">
+                    <div>Challenge</div>
+                    <div>Category</div>
+                    <div>Difficulty</div>
+                    <div>Status</div>
+                    <div>Actions</div>
+                </div>
+                <!-- This would usually be populated from backend, leaving as placeholder for UI -->
+                <div class="table-row">
+                    <div class="challenge-info">
+                        <span class="challenge-name">Build Basic RESTful API</span>
+                        <span class="challenge-meta">Updated 2 days ago</span>
+                    </div>
+                    <div>Backend</div>
+                    <div><span class="status-badge status-active">Easy</span></div>
+                    <div><span class="status-badge status-active">Active</span></div>
+                    <div><button class="action-btn"><i class="fas fa-edit"></i></button></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Tag management
+        function updateHiddenTags() {
+            const tags = Array.from(document.querySelectorAll('#tagsList .tag-item')).map(tag => {
+                const text = tag.textContent.trim();
+                return text;
+            });
+            document.getElementById('hiddenRequiredSkills').value = tags.join(', ');
+        }
+
+        function addTag(event) {
+            if (event.key === 'Enter') {
+                event.preventDefault();
+                const input = event.target;
+                const value = input.value.trim();
+
+                if (value) {
+                    const tagList = document.getElementById('tagsList');
+                    const span = document.createElement('span');
+                    span.className = 'tag-item';
+                    span.innerHTML = `${value} <i class="fas fa-times" onclick="removeTag(this)"></i>`;
+                    tagList.appendChild(span);
+                    input.value = '';
+                    updateHiddenTags();
+                }
+            }
+        }
+
+        function removeTag(element) {
+            element.parentElement.remove();
+            updateHiddenTags();
+        }
+
+        // Test Case management
+        let testCaseCount = 2; // Starting with 2 existing ones
+
+        function addTestCase() {
+            testCaseCount++;
+            const container = document.getElementById('testCases');
+            const div = document.createElement('div');
+            div.className = 'test-case-item';
+            div.innerHTML = `
+                <div class="test-case-header">
+                    <span class="test-case-title">Test case \${testCaseCount}</span>
+                    <div class="test-case-actions" style="display: flex; align-items: center; gap: 1rem;">
+                        <label class="hidden-toggle">
+                            <input type="checkbox" onchange="this.nextElementSibling.value = this.checked ? '1' : '0'">
+                            <input type="hidden" name="test_hidden[]" value="0">
+                            <span>Hidden</span>
+                        </label>
+                        <i class="fas fa-copy" onclick="duplicateTestCase(this)"></i>
+                        <i class="fas fa-trash" onclick="deleteTestCase(this)"></i>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <input type="text" name="test_input[]" class="form-input" placeholder="Input" value="">
+                    <input type="text" name="test_output[]" class="form-input" placeholder="Expected output" value="">
+                </div>
+            `;
+            container.appendChild(div);
+        }
+
+        function deleteTestCase(element) {
+            const items = document.querySelectorAll('.test-case-item');
+            if (items.length > 1) {
+                element.closest('.test-case-item').remove();
+                // Renumber test cases
+                document.querySelectorAll('.test-case-item').forEach((item, index) => {
+                    item.querySelector('.test-case-title').textContent = `Test case ${index + 1}`;
+                });
+                testCaseCount = items.length - 1;
+            } else {
+                alert("At least one test case is required.");
+            }
+        }
+
+        function duplicateTestCase(element) {
+            const original = element.closest('.test-case-item');
+            const clone = original.cloneNode(true);
+
+            // Fix values in clone
+            const inputs = clone.querySelectorAll('input:not([type="hidden"]), textarea');
+            const originalInputs = original.querySelectorAll('input:not([type="hidden"]), textarea');
+            inputs.forEach((input, i) => {
+                input.value = originalInputs[i].value;
+            });
+
+            // Fix checkbox and hidden input in clone
+            const originalCheckbox = original.querySelector('input[type="checkbox"]');
+            const cloneCheckbox = clone.querySelector('input[type="checkbox"]');
+            const cloneHiddenInput = clone.querySelector('input[type="hidden"][name="test_hidden[]"]');
+
+            cloneCheckbox.checked = originalCheckbox.checked;
+            cloneHiddenInput.value = originalCheckbox.checked ? '1' : '0';
+
+            original.after(clone);
+
+            // Renumber all
+            document.querySelectorAll('.test-case-item').forEach((item, index) => {
+                item.querySelector('.test-case-title').textContent = `Test case ${index + 1}`;
+            });
+            testCaseCount = document.querySelectorAll('.test-case-item').length;
+        }
+
+        // Form actions
+        function saveDraft() {
+            document.getElementById('challengeStatus').value = 'DRAFT';
+            document.getElementById('createChallengeForm').submit();
+        }
+
+        function publishChallenge(event) {
+            // event might be passed from HTML (optional)
+            document.getElementById('challengeStatus').value = 'ACTIVE';
+            // Form validation check could go here
+            const title = document.querySelector('input[name="title"]').value;
+            if (!title) {
+                alert("Please enter a challenge name.");
+                if (event) event.preventDefault();
+                return;
+            }
+            document.getElementById('createChallengeForm').submit();
+        }
+
+        function previewChallenge() {
+            alert("Preview functionality coming soon!");
+        }
+
+        // Initialize tags from existing HTML
+        window.addEventListener('load', updateHiddenTags);
+    </script>
+</body>
+
+</html>
